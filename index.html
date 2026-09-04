@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Senior Graphic Designer — Branding · Campaigns · Visual Communication · Motion</title>
+<meta name="description" content="Portafolio de Senior Graphic Designer & Art Director especializado en Branding, Campaigns, Visual Communication y Motion. Identidad de marca, dirección de arte y diseño con intención.">
+<meta name="keywords" content="Senior Graphic Designer, Art Direction, Branding, Motion Graphics, Visual Identity, Adobe Creative Cloud, Campaigns, Visual Communication">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Space+Grotesk:wght@300;400;500;600;700&family=Cinzel:wght@500;600&family=Caveat:wght@600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+  :root{
+    --bg: #111111;
+    --bg-alt: #161513;
+    --sand: #E5D9C5;
+    --terracotta: #C1652E;
+    --off-white: #F5F1EA;
+    --muted: #8A8479;
+    --hairline: #2A2825;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--off-white);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x:hidden;
+    cursor: default;
+  }
+
+  .font-serif-display{ font-family:'Playfair Display', serif; }
+  ::selection{ background: var(--terracotta); color: var(--bg); }
+  ::-webkit-scrollbar{ width:10px; }
+  ::-webkit-scrollbar-track{ background: var(--bg); }
+  ::-webkit-scrollbar-thumb{ background: var(--hairline); border-radius:0; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline: 2px solid var(--terracotta);
+    outline-offset: 3px;
+  }
+
+  /* ---------- Custom cursor (desktop only) ---------- */
+  @media (hover:hover) and (pointer:fine){
+    body.cursor-ready{ cursor:none; }
+    body.cursor-ready a, body.cursor-ready button, body.cursor-ready input, body.cursor-ready textarea{ cursor:none; }
+  }
+  .cursor-dot, .cursor-ring{
+    position:fixed;
+    top:0; left:0;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:9999;
+    transform:translate(-50%,-50%);
+    display:none;
+  }
+  body.cursor-ready .cursor-dot, body.cursor-ready .cursor-ring{ display:block; }
+  .cursor-dot{
+    width:6px; height:6px;
+    background: var(--terracotta);
+    transition: opacity .2s ease, width .3s cubic-bezier(.34,1.56,.64,1), height .3s cubic-bezier(.34,1.56,.64,1);
+    will-change: transform;
+  }
+  .cursor-ring{
+    width:34px; height:34px;
+    border:1px solid var(--sand);
+    opacity:.6;
+    transition: width .3s cubic-bezier(.34,1.56,.64,1), height .3s cubic-bezier(.34,1.56,.64,1), opacity .25s ease, border-color .25s ease, background .25s ease;
+    will-change: transform;
+  }
+  .cursor-ring.cursor-hover{
+    width:64px; height:64px;
+    opacity:1;
+    border-color: var(--terracotta);
+    background: rgba(193,101,46,0.08);
+  }
+  .cursor-ring.cursor-drag{
+    width:80px; height:80px;
+    opacity:1;
+    border-color: var(--sand);
+    background: rgba(229,217,197,0.08);
+  }
+
+  /* ---------- Hero dynamic word ---------- */
+  .word-stage{
+    display:inline-block;
+    perspective: 900px;
+  }
+  #dynamic-word{
+    display:inline-block;
+    transform-style: preserve-3d;
+    transition: transform .5s cubic-bezier(.22,.75,.2,1), filter .5s ease, color .5s ease;
+    will-change: transform, filter;
+  }
+  #dynamic-word.swap{ transform: rotateX(85deg) translateY(4px); filter: blur(10px); }
+
+  /* ---------- Hero entrance sequence ---------- */
+  .hero-intro > *{
+    opacity:0;
+    transform: translateY(26px);
+    transition: opacity .9s cubic-bezier(.16,.8,.24,1), transform .9s cubic-bezier(.16,.8,.24,1);
+  }
+  .hero-intro.in-view > *:nth-child(1){ transition-delay: .05s; }
+  .hero-intro.in-view > *:nth-child(2){ transition-delay: .18s; }
+  .hero-intro.in-view > *:nth-child(3){ transition-delay: .34s; }
+  .hero-intro.in-view > *:nth-child(4){ transition-delay: .48s; }
+  .hero-intro.in-view > *{ opacity:1; transform:none; }
+
+  .photo-reveal{
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 1.15s cubic-bezier(.16,.8,.24,1);
+    transition-delay: .25s;
+    will-change: clip-path;
+  }
+  .photo-reveal.in-view{ clip-path: inset(0 0 0% 0); }
+
+  .photo-tilt{ transition: transform .25s ease-out; will-change: transform; }
+
+  .badge-intro{
+    opacity:0;
+    transform: translateY(16px);
+    transition: opacity .7s ease .95s, transform .7s ease .95s;
+  }
+  .badge-intro.in-view{ opacity:1; transform:none; }
+
+  /* ---------- Scroll reveal (rest of page) ---------- */
+  .reveal{
+    opacity:0;
+    transform: translate(var(--tx,0px), 30px) scale(.97);
+    transition: opacity .85s cubic-bezier(.16,.8,.24,1), transform .85s cubic-bezier(.16,.8,.24,1);
+    will-change: opacity, transform;
+  }
+  .reveal.in-view{ opacity:1; transform:none; }
+
+  .reveal-stagger > *{
+    opacity:0;
+    transform: translateY(22px) scale(.96);
+    transition: opacity .7s cubic-bezier(.16,.8,.24,1), transform .7s cubic-bezier(.16,.8,.24,1);
+    transition-delay: calc(var(--i,0) * 90ms);
+  }
+  .reveal-stagger.in-view > *{ opacity:1; transform:none; }
+
+  /* ---------- Parallax layers ---------- */
+  [data-parallax]{ will-change: transform; }
+
+  /* ---------- Marquees (crossed) ---------- */
+  .marquee-wrap{ transform: rotate(-3.5deg) scale(1.05); }
+  .marquee-wrap-alt{ transform: rotate(3deg) scale(1.05); }
+  .marquee-track{ display:flex; width:max-content; animation: scroll-left 32s linear infinite; }
+  .marquee-track:hover{ animation-play-state: paused; }
+  .marquee-track-alt{ display:flex; width:max-content; animation: scroll-right 24s linear infinite; }
+  .marquee-track-alt:hover{ animation-play-state: paused; }
+  @keyframes scroll-left{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
+  @keyframes scroll-right{ from{ transform: translateX(-50%); } to{ transform: translateX(0); } }
+
+  /* ---------- 3D Cylindrical Carousel ---------- */
+  .carousel-stage{
+    perspective: 1900px;
+    perspective-origin: 50% 45%;
+    touch-action: pan-y;
+  }
+  .carousel-track{
+    transform-style: preserve-3d;
+    position:relative;
+    width:100%;
+    height:100%;
+    cursor: grab;
+  }
+  .carousel-track.grabbing{ cursor: grabbing; }
+  .carousel-card{
+    position:absolute;
+    top:0;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    transition: opacity .5s ease, filter .5s ease;
+    will-change: transform, opacity, filter;
+  }
+  .carousel-card.is-front{ box-shadow: 0 40px 80px -20px rgba(0,0,0,.65); }
+  .card-scroll::-webkit-scrollbar{ width:5px; }
+  .card-scroll::-webkit-scrollbar-thumb{ background: var(--hairline); }
+  .card-scroll{ scrollbar-width: thin; scrollbar-color: var(--hairline) transparent; }
+
+  #carousel-progress-bar{ transition: width 6000ms linear; }
+
+  .logo-mark{
+    font-family:'Syne', sans-serif;
+    font-weight:700;
+    letter-spacing:0.02em;
+    color: var(--muted);
+    opacity:.75;
+    white-space:nowrap;
+  }
+  .keyword-mark{
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:500;
+    color: var(--sand);
+    opacity:.55;
+    white-space:nowrap;
+    font-size:1.1rem;
+  }
+
+  .hairline{ border-color: var(--hairline); }
+
+  .btn-primary{ background: var(--sand); color: var(--bg); transition: background .3s ease; will-change: transform; }
+  .btn-primary:hover{ background: var(--off-white); }
+
+  .nav-arrow{ border:1px solid var(--hairline); transition: border-color .3s ease, background .3s ease, transform .2s ease; }
+  .nav-arrow:hover{ border-color: var(--terracotta); background: rgba(193,101,46,0.1); }
+  .nav-arrow:active{ transform: scale(.93); }
+
+  .tag-pill{ border:1px solid var(--hairline); color: var(--muted); font-size:.72rem; }
+  .grid-photo{ background: var(--bg-alt); border:1px solid var(--hairline); overflow:hidden; }
+  .grid-photo img{ transition: transform .6s cubic-bezier(.16,.8,.24,1); }
+  .grid-photo:hover img{ transform: scale(1.08); }
+
+  input, textarea{ background: transparent; border-bottom:1px solid var(--hairline); color: var(--off-white); }
+  input::placeholder, textarea::placeholder{ color: var(--muted); }
+  input:focus, textarea:focus{ border-color: var(--terracotta); outline:none; }
+
+  .stat-number{ display:inline-block; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+
+<body class="antialiased">
+
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- ============ NAV ============ -->
+<header class="fixed top-0 left-0 w-full z-50 backdrop-blur-sm bg-[#111111]/80 border-b hairline">
+  <div class="max-w-[1400px] mx-auto px-6 md:px-10 py-4 flex items-center justify-between">
+    <a href="#top" class="font-serif-display text-lg tracking-wide">M. Reyes</a>
+    <nav class="hidden md:flex items-center gap-8 text-sm text-[var(--muted)]">
+      <a href="#trabajo" class="hover:text-[var(--off-white)] transition-colors">Trabajo</a>
+      <a href="#sobre-mi" class="hover:text-[var(--off-white)] transition-colors">Sobre mí</a>
+      <a href="#contacto" class="hover:text-[var(--off-white)] transition-colors">Contacto</a>
+    </nav>
+    <a href="#" download class="magnetic hidden md:inline-block btn-primary text-sm px-5 py-2.5 font-medium">Descargar CV</a>
+    <button id="menu-btn" class="md:hidden w-9 h-9 flex flex-col justify-center items-center gap-1.5" aria-label="Abrir menú">
+      <span class="w-6 h-px bg-[var(--off-white)]"></span>
+      <span class="w-6 h-px bg-[var(--off-white)]"></span>
+    </button>
+  </div>
+  <div id="mobile-menu" class="hidden md:hidden flex-col px-6 pb-6 gap-4 text-sm border-t hairline">
+    <a href="#trabajo" class="py-2">Trabajo</a>
+    <a href="#sobre-mi" class="py-2">Sobre mí</a>
+    <a href="#contacto" class="py-2">Contacto</a>
+    <a href="#" download class="btn-primary text-center px-5 py-2.5 font-medium mt-2">Descargar CV</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="relative pt-36 md:pt-44 pb-16 px-6 md:px-10 max-w-[1400px] mx-auto">
+  <div class="grid md:grid-cols-12 gap-10 md:gap-6 items-end">
+
+    <div class="md:col-span-7 order-2 md:order-1 hero-intro" id="hero-intro">
+      <p class="text-[var(--terracotta)] text-sm mb-6 tracking-wide" data-parallax="0.04">Senior Graphic Designer — Art Director</p>
+      <h1 class="font-serif-display text-[2.6rem] leading-[1.08] sm:text-6xl md:text-7xl md:leading-[1.05]">
+        Diseño con <span class="word-stage"><span id="dynamic-word" class="font-serif-display">intención</span></span>,<br class="hidden sm:block"> no por defecto.
+      </h1>
+      <p class="mt-8 max-w-md text-[var(--muted)] text-base leading-relaxed">
+        Trece años dirigiendo identidad de marca, campañas y piezas en movimiento para clientes que necesitan verse distintos, no solo verse bien. Branding, Art Direction, Motion Graphics, Visual Identity — construido en Adobe Creative Cloud.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <a href="#" download class="magnetic btn-primary px-7 py-3.5 text-sm font-medium">Descargar CV</a>
+        <a href="#trabajo" class="text-sm border-b border-[var(--hairline)] pb-1 hover:border-[var(--off-white)] transition-colors">Ver proyectos</a>
+      </div>
+    </div>
+
+    <div class="md:col-span-5 order-1 md:order-2 relative" data-parallax="0.1">
+      <div class="relative ml-auto w-full max-w-[360px] md:max-w-none md:w-[90%] aspect-[4/5] md:-mr-10">
+        <div class="photo-reveal absolute inset-0 overflow-hidden" id="photo-mask">
+          <div class="photo-tilt w-full h-full" id="photo-tilt">
+            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1200&auto=format&fit=crop"
+                 alt="Retrato profesional del diseñador"
+                 class="w-full h-full object-cover grayscale contrast-110">
+          </div>
+        </div>
+        <div class="badge-intro absolute -bottom-5 -left-5 md:-left-8 bg-[var(--sand)] text-[var(--bg)] px-5 py-3 max-w-[220px]" id="hero-badge">
+          <p class="font-serif-display text-sm leading-snug">13 años creando identidades que no se olvidan.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATS STRIP ============ -->
+<section class="px-6 md:px-10 max-w-[1400px] mx-auto pb-16 md:pb-20">
+  <div class="reveal reveal-stagger grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6 border-y hairline py-10">
+    <div>
+      <span class="stat-number font-serif-display text-4xl md:text-5xl text-[var(--sand)]" data-count="13">0</span>
+      <p class="text-xs text-[var(--muted)] mt-2">Años de experiencia</p>
+    </div>
+    <div>
+      <span class="stat-number font-serif-display text-4xl md:text-5xl text-[var(--sand)]" data-count="84">0</span>
+      <p class="text-xs text-[var(--muted)] mt-2">Marcas dirigidas</p>
+    </div>
+    <div>
+      <span class="stat-number font-serif-display text-4xl md:text-5xl text-[var(--sand)]" data-count="12">0</span>
+      <p class="text-xs text-[var(--muted)] mt-2">Premios y menciones</p>
+    </div>
+    <div>
+      <span class="stat-number font-serif-display text-4xl md:text-5xl text-[var(--sand)]" data-count="4">0</span>
+      <p class="text-xs text-[var(--muted)] mt-2">Continentes con clientes</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARQUEE (crossed, dos direcciones) ============ -->
+<section class="py-10 md:py-16 overflow-hidden">
+  <div class="marquee-wrap border-y hairline py-6 bg-[var(--bg-alt)]" data-parallax="0.06">
+    <div class="marquee-track">
+      <div class="flex items-center gap-16 px-8">
+        <span class="logo-mark text-2xl md:text-3xl">ARKA STUDIO</span>
+        <span class="logo-mark text-2xl md:text-3xl">NORDEN &amp; CO</span>
+        <span class="logo-mark text-2xl md:text-3xl">VELAR</span>
+        <span class="logo-mark text-2xl md:text-3xl">MUELLE 9</span>
+        <span class="logo-mark text-2xl md:text-3xl">HALCÓN CAPITAL</span>
+        <span class="logo-mark text-2xl md:text-3xl">TIERRA FIRME</span>
+        <span class="logo-mark text-2xl md:text-3xl">OBRA NEGRA</span>
+        <span class="logo-mark text-2xl md:text-3xl">SILEX</span>
+      </div>
+      <div class="flex items-center gap-16 px-8" aria-hidden="true">
+        <span class="logo-mark text-2xl md:text-3xl">ARKA STUDIO</span>
+        <span class="logo-mark text-2xl md:text-3xl">NORDEN &amp; CO</span>
+        <span class="logo-mark text-2xl md:text-3xl">VELAR</span>
+        <span class="logo-mark text-2xl md:text-3xl">MUELLE 9</span>
+        <span class="logo-mark text-2xl md:text-3xl">HALCÓN CAPITAL</span>
+        <span class="logo-mark text-2xl md:text-3xl">TIERRA FIRME</span>
+        <span class="logo-mark text-2xl md:text-3xl">OBRA NEGRA</span>
+        <span class="logo-mark text-2xl md:text-3xl">SILEX</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="marquee-wrap-alt border-y hairline py-4 mt-6 bg-[var(--bg)]" data-parallax="-0.05">
+    <div class="marquee-track-alt">
+      <div class="flex items-center gap-10 px-8">
+        <span class="keyword-mark">Branding</span>
+        <span class="keyword-mark text-[var(--terracotta)]">·</span>
+        <span class="keyword-mark">Art Direction</span>
+        <span class="keyword-mark text-[var(--terracotta)]">·</span>
+        <span class="keyword-mark">Motion Graphics</span>
+        <span class="keyword-mark text-[var(--terracotta)]">·</span>
+        <span class="keyword-mark">Visual Identity</span>
+        <span class="keyword-mark text-[var(--terracotta)]">·</span>
+        <span class="keyword-mark">Campaigns</span>
+        <span class="keyword-mark text-[var(--terracotta)]">·</span>
+        <span class="keyword-mark">Visual Communication</span>
+      </div>
+      <div class="flex items-center gap-10 px-8" aria-hidden="true">
+        <span class="keyword-mark">Branding</span>
+        <span class="keyword-mark text-[var(--terracotta)]">·</span>
+        <span class="keyword-mark">Art Direction</span>
+        <span class="keyword-mark text-[var(--terracotta)]">·</span>
+        <span class="keyword-mark">Motion Graphics</span>
+        <span class="keyword-mark text-[var(--terracotta)]">·</span>
+        <span class="keyword-mark">Visual Identity</span>
+        <span class="keyword-mark text-[var(--terracotta)]">·</span>
+        <span class="keyword-mark">Campaigns</span>
+        <span class="keyword-mark text-[var(--terracotta)]">·</span>
+        <span class="keyword-mark">Visual Communication</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS 3D CYLINDRICAL CAROUSEL ============ -->
+<section id="trabajo" class="px-6 md:px-10 max-w-[1400px] mx-auto py-16 md:py-28">
+  <div class="reveal flex items-end justify-between mb-14 md:mb-20 flex-wrap gap-6">
+    <div>
+      <p class="text-[var(--terracotta)] text-sm mb-4" data-parallax="0.03">Trabajo seleccionado</p>
+      <h2 class="font-serif-display text-4xl md:text-5xl max-w-xl">Branding y motion, lado a lado.</h2>
+    </div>
+    <div class="flex items-center gap-3">
+      <button id="prev-btn" class="nav-arrow w-12 h-12 flex items-center justify-center" aria-label="Proyecto anterior">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button id="next-btn" class="nav-arrow w-12 h-12 flex items-center justify-center" aria-label="Siguiente proyecto">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="carousel-stage reveal" id="carousel-stage" tabindex="0" role="region" aria-label="Carrusel 3D de proyectos, usa las flechas del teclado o arrastra para navegar">
+    <div id="carousel-track" class="carousel-track h-[660px] md:h-[760px]"></div>
+  </div>
+
+  <div id="carousel-dots" class="flex justify-center gap-2.5 mt-10"></div>
+  <div class="w-full max-w-[220px] mx-auto h-[2px] bg-[var(--hairline)] mt-5 overflow-hidden">
+    <div id="carousel-progress-bar" class="h-full bg-[var(--terracotta)]" style="width:0%"></div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="sobre-mi" class="px-6 md:px-10 max-w-[1400px] mx-auto py-16 md:py-28 border-t hairline">
+  <div class="grid md:grid-cols-12 gap-12 md:gap-8">
+    <div class="md:col-span-5 reveal" style="--tx:-28px">
+      <p class="text-[var(--terracotta)] text-sm mb-4">Sobre mí</p>
+      <h2 class="font-serif-display text-4xl md:text-5xl leading-tight">Dirijo marcas como quien edita una revista: con criterio, no por costumbre.</h2>
+    </div>
+    <div class="md:col-span-7 reveal" style="--tx:28px">
+      <p class="text-[var(--muted)] leading-relaxed text-base md:text-lg max-w-xl">
+        Empecé diseñando papelería para estudios pequeños y hoy dirijo sistemas de marca completos para compañías que compiten en mercados saturados. Mi trabajo conecta estrategia y estética: cada decisión visual responde a un objetivo de negocio, no a una tendencia. Trabajo de cerca con equipos de marketing y producto para que la identidad sobreviva más allá del lanzamiento.
+      </p>
+
+      <div class="mt-12">
+        <p class="text-sm text-[var(--muted)] mb-5">Herramientas &amp; disciplinas</p>
+        <div class="reveal-stagger grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-3 max-w-xl in-view">
+          <span class="border-b hairline pb-2 text-sm">Adobe Illustrator</span>
+          <span class="border-b hairline pb-2 text-sm">Adobe Photoshop</span>
+          <span class="border-b hairline pb-2 text-sm">Adobe After Effects</span>
+          <span class="border-b hairline pb-2 text-sm">Adobe InDesign</span>
+          <span class="border-b hairline pb-2 text-sm">Figma</span>
+          <span class="border-b hairline pb-2 text-sm">Cinema 4D</span>
+          <span class="border-b hairline pb-2 text-sm">Identidad de marca</span>
+          <span class="border-b hairline pb-2 text-sm">Dirección de arte</span>
+          <span class="border-b hairline pb-2 text-sm">Motion graphics</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT / FOOTER ============ -->
+<footer id="contacto" class="px-6 md:px-10 max-w-[1400px] mx-auto py-16 md:py-28 border-t hairline">
+  <div class="grid md:grid-cols-12 gap-12">
+    <div class="md:col-span-6 reveal" style="--tx:-28px">
+      <h2 class="font-serif-display text-4xl md:text-5xl leading-tight mb-6">¿Un proyecto en mente?<br>Hablemos.</h2>
+      <a href="mailto:hola@mreyes.design" class="text-xl md:text-2xl text-[var(--sand)] border-b border-[var(--hairline)] hover:border-[var(--sand)] transition-colors pb-1">hola@mreyes.design</a>
+    </div>
+    <div class="md:col-span-6 md:col-start-8 reveal" style="--tx:28px">
+      <form class="flex flex-col gap-6" onsubmit="event.preventDefault(); this.reset(); document.getElementById('form-msg').classList.remove('hidden');">
+        <div>
+          <label for="name" class="text-xs text-[var(--muted)] block mb-2">Nombre</label>
+          <input id="name" type="text" required class="w-full py-2 text-sm" placeholder="Tu nombre">
+        </div>
+        <div>
+          <label for="email" class="text-xs text-[var(--muted)] block mb-2">Correo</label>
+          <input id="email" type="email" required class="w-full py-2 text-sm" placeholder="tu@correo.com">
+        </div>
+        <div>
+          <label for="msg" class="text-xs text-[var(--muted)] block mb-2">Mensaje</label>
+          <textarea id="msg" rows="3" required class="w-full py-2 text-sm resize-none" placeholder="Cuéntame sobre tu proyecto"></textarea>
+        </div>
+        <button type="submit" class="magnetic btn-primary self-start px-7 py-3 text-sm font-medium mt-2">Enviar mensaje</button>
+        <p id="form-msg" class="hidden text-sm text-[var(--terracotta)]">Gracias — te responderé en menos de 48 horas.</p>
+      </form>
+    </div>
+  </div>
+
+  <div class="flex flex-col sm:flex-row items-center justify-between gap-6 mt-24 pt-8 border-t hairline text-sm text-[var(--muted)]">
+    <p>© <span id="year"></span> M. Reyes — Senior Graphic Designer &amp; Art Director</p>
+    <div class="flex items-center gap-6">
+      <a href="https://linkedin.com" target="_blank" rel="noopener" class="hover:text-[var(--off-white)] transition-colors">LinkedIn</a>
+      <a href="https://behance.net" target="_blank" rel="noopener" class="hover:text-[var(--off-white)] transition-colors">Behance</a>
+      <a href="https://github.com" target="_blank" rel="noopener" class="hover:text-[var(--off-white)] transition-colors">GitHub / Sitio</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isFinePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+
+/* ================= YEAR ================= */
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ================= MOBILE MENU ================= */
+const menuBtn = document.getElementById('menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+menuBtn.addEventListener('click', () => {
+  const isHidden = mobileMenu.classList.contains('hidden');
+  mobileMenu.classList.toggle('hidden');
+  mobileMenu.classList.toggle('flex');
+  menuBtn.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+});
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  mobileMenu.classList.add('hidden');
+  mobileMenu.classList.remove('flex');
+}));
+
+/* ================= CUSTOM CURSOR (fluid + magnetic sphere) ================= */
+if (isFinePointer && !prefersReducedMotion){
+  document.body.classList.add('cursor-ready');
+  const dot = document.getElementById('cursor-dot');
+  const ring = document.getElementById('cursor-ring');
+  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0, dotX = 0, dotY = 0;
+  let prevRingX = 0, prevRingY = 0;
+  let magnetTarget = null;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX; mouseY = e.clientY;
+  });
+
+  function animateCursor(){
+    // dot follows fast, ring trails with spring easing for a fluid feel
+    dotX += (mouseX - dotX) * 0.55;
+    dotY += (mouseY - dotY) * 0.55;
+
+    let targetX = mouseX, targetY = mouseY;
+
+    if (magnetTarget){
+      const rect = magnetTarget.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      // pull the ring toward the element's center — magnetic sphere effect
+      targetX = mouseX + (cx - mouseX) * 0.45;
+      targetY = mouseY + (cy - mouseY) * 0.45;
+    }
+
+    prevRingX = ringX; prevRingY = ringY;
+    ringX += (targetX - ringX) * 0.16;
+    ringY += (targetY - ringY) * 0.16;
+
+    // elastic squash/stretch based on ring velocity
+    const vx = ringX - prevRingX, vy = ringY - prevRingY;
+    const speed = Math.min(Math.hypot(vx, vy) * 0.06, 0.35);
+    const angle = Math.atan2(vy, vx) * 180 / Math.PI;
+
+    dot.style.transform = `translate(${dotX}px, ${dotY}px) translate(-50%,-50%)`;
+    ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%,-50%) rotate(${angle}deg) scale(${1 + speed}, ${1 - speed})`;
+
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  document.querySelectorAll('a, button, input, textarea, .magnetic').forEach(el => {
+    el.addEventListener('mouseenter', () => { ring.classList.add('cursor-hover'); magnetTarget = el; });
+    el.addEventListener('mouseleave', () => { ring.classList.remove('cursor-hover'); magnetTarget = null; });
+  });
+}
+
+/* ================= MAGNETIC ELEMENTS ================= */
+if (isFinePointer && !prefersReducedMotion){
+  document.querySelectorAll('.magnetic').forEach(el => {
+    el.style.transition = 'transform .35s cubic-bezier(.34,1.56,.64,1)';
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      el.style.transform = `translate(${x / 5}px, ${y / 5}px)`;
+    });
+    el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+  });
+}
+
+/* ================= HERO ENTRANCE ================= */
+window.addEventListener('DOMContentLoaded', () => {
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      document.getElementById('hero-intro').classList.add('in-view');
+      document.getElementById('photo-mask').classList.add('in-view');
+      document.getElementById('hero-badge').classList.add('in-view');
+    }, 120);
+  });
+});
+
+/* ================= PHOTO TILT ================= */
+if (isFinePointer && !prefersReducedMotion){
+  const tiltTarget = document.getElementById('photo-tilt');
+  const tiltZone = document.getElementById('photo-mask');
+  tiltZone.addEventListener('mousemove', (e) => {
+    const rect = tiltZone.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width - 0.5;
+    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    tiltTarget.style.transform = `perspective(800px) rotateY(${px * 10}deg) rotateX(${-py * 10}deg) scale(1.03)`;
+  });
+  tiltZone.addEventListener('mouseleave', () => {
+    tiltTarget.style.transform = 'perspective(800px) rotateY(0deg) rotateX(0deg) scale(1)';
+  });
+}
+
+/* ================= HERO DYNAMIC WORD (organic 3D flip) ================= */
+const dynamicWordEl = document.getElementById('dynamic-word');
+const wordStates = [
+  { text: 'intención',   font: "'Playfair Display', serif", style: 'italic', weight: 600, color: 'var(--sand)' },
+  { text: 'criterio',    font: "'Cinzel', serif",            style: 'normal', weight: 600, color: 'var(--terracotta)' },
+  { text: 'propósito',   font: "'Caveat', cursive",           style: 'normal', weight: 700, color: 'var(--off-white)' },
+  { text: 'carácter',    font: "'Syne', sans-serif",          style: 'normal', weight: 700, color: 'var(--sand)' },
+  { text: 'dirección',   font: "'Playfair Display', serif",  style: 'italic', weight: 500, color: 'var(--terracotta)' }
+];
+let wordIndex = 0;
+function applyWordState(state){
+  dynamicWordEl.textContent = state.text;
+  dynamicWordEl.style.fontFamily = state.font;
+  dynamicWordEl.style.fontStyle = state.style;
+  dynamicWordEl.style.fontWeight = state.weight;
+  dynamicWordEl.style.color = state.color;
+}
+applyWordState(wordStates[0]);
+function cycleWord(){
+  dynamicWordEl.classList.add('swap');
+  setTimeout(() => {
+    wordIndex = (wordIndex + 1) % wordStates.length;
+    applyWordState(wordStates[wordIndex]);
+    dynamicWordEl.classList.remove('swap');
+  }, 420);
+}
+setInterval(cycleWord, 2700);
+
+/* ================= SCROLL DIRECTION TRACKER ================= */
+let lastY = window.scrollY;
+let scrollDir = 1;
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  scrollDir = y > lastY ? 1 : -1;
+  lastY = y;
+}, { passive: true });
+
+/* ================= SCROLL REVEAL (staggered, directional) ================= */
+const revealEls = document.querySelectorAll('.reveal');
+let revealCount = 0;
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting){
+      const el = entry.target;
+      if (!el.style.getPropertyValue('--tx')){
+        const dir = (revealCount % 2 === 0 ? 1 : -1) * scrollDir;
+        el.style.setProperty('--tx', `${dir * 26}px`);
+      }
+      el.classList.add('in-view');
+      revealCount++;
+      revealObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(el => revealObserver.observe(el));
+
+/* ================= STAGGERED CHILD REVEAL ================= */
+document.querySelectorAll('.reveal-stagger').forEach(group => {
+  group.querySelectorAll(':scope > *').forEach((child, i) => child.style.setProperty('--i', i));
+});
+const staggerObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting){
+      entry.target.classList.add('in-view');
+      staggerObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+document.querySelectorAll('.reveal-stagger:not(.in-view)').forEach(el => staggerObserver.observe(el));
+
+/* ================= PARALLAX (rAF-driven, layered depth) ================= */
+const parallaxEls = Array.from(document.querySelectorAll('[data-parallax]'));
+let parallaxTicking = false;
+function updateParallax(){
+  parallaxEls.forEach(el => {
+    const speed = parseFloat(el.dataset.parallax);
+    const rect = el.getBoundingClientRect();
+    const centerOffset = rect.top + rect.height / 2 - window.innerHeight / 2;
+    el.style.transform = `translate3d(0, ${(-centerOffset * speed).toFixed(2)}px, 0)`;
+  });
+  parallaxTicking = false;
+}
+function onScrollParallax(){
+  if (!parallaxTicking && !prefersReducedMotion){
+    requestAnimationFrame(updateParallax);
+    parallaxTicking = true;
+  }
+}
+if (!prefersReducedMotion){
+  window.addEventListener('scroll', onScrollParallax, { passive: true });
+  window.addEventListener('resize', onScrollParallax);
+  updateParallax();
+}
+
+/* ================= STAT COUNTERS ================= */
+const statEls = document.querySelectorAll('.stat-number');
+const statObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting){
+      const el = entry.target;
+      const target = parseInt(el.dataset.count, 10);
+      const duration = 1400;
+      const start = performance.now();
+      function tick(now){
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * target);
+        if (progress < 1) requestAnimationFrame(tick);
+        else el.textContent = target;
+      }
+      requestAnimationFrame(tick);
+      statObserver.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+statEls.forEach(el => statObserver.observe(el));
+
+/* ================= PROJECT DATA ================= */
+const projects = [
+  {
+    client: 'ARKA STUDIO', title: 'Sistema de identidad para estudio de arquitectura', category: 'Branding',
+    cover: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1400&auto=format&fit=crop',
+    grid: [
+      'https://images.unsplash.com/photo-1634942536790-6a5cb04eee16?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1616628188859-7a11abb6fcc9?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1600861195091-690c92f1d2cd?q=80&w=800&auto=format&fit=crop'
+    ],
+    social: [
+      'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=700&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1611162616475-46b635cb6868?q=80&w=700&auto=format&fit=crop'
+    ]
+  },
+  {
+    client: 'NORDEN & CO', title: 'Campaña de lanzamiento — colección otoño', category: 'Campaña',
+    cover: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=1400&auto=format&fit=crop',
+    grid: [
+      'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800&auto=format&fit=crop'
+    ],
+    social: [
+      'https://images.unsplash.com/photo-1512418490979-92798cec1380?q=80&w=700&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=700&auto=format&fit=crop'
+    ]
+  },
+  {
+    client: 'VELAR', title: 'Motion identity para app financiera', category: 'Motion',
+    cover: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1400&auto=format&fit=crop',
+    grid: [
+      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=800&auto=format&fit=crop'
+    ],
+    social: [
+      'https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=700&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1618172193622-ae2d025f4032?q=80&w=700&auto=format&fit=crop'
+    ]
+  },
+  {
+    client: 'MUELLE 9', title: 'Identidad visual para marca de café de especialidad', category: 'Branding',
+    cover: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=1400&auto=format&fit=crop',
+    grid: [
+      'https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800&auto=format&fit=crop'
+    ],
+    social: [
+      'https://images.unsplash.com/photo-1461988320302-91bde64fc8e4?q=80&w=700&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1495521821757-a1efb6729352?q=80&w=700&auto=format&fit=crop'
+    ]
+  },
+  {
+    client: 'HALCÓN CAPITAL', title: 'Comunicación visual para reporte anual', category: 'Comunicación Visual',
+    cover: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1400&auto=format&fit=crop',
+    grid: [
+      'https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1543286386-713bdd548da4?q=80&w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1568992687947-868a62a9f521?q=80&w=800&auto=format&fit=crop'
+    ],
+    social: [
+      'https://images.unsplash.com/photo-1585858229735-cd08d8cbc7db?q=80&w=700&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1587614382346-4ec70e388b28?q=80&w=700&auto=format&fit=crop'
+    ]
+  }
+];
+
+/* ================= 3D CYLINDRICAL CAROUSEL ENGINE ================= */
+const track = document.getElementById('carousel-track');
+const stage = document.getElementById('carousel-stage');
+const dotsWrap = document.getElementById('carousel-dots');
+const total = projects.length;
+const cardAngle = 360 / total;
+
+let radius = 0;
+let cardWidthPx = 0;
+let activeIndex = 0;
+let currentRotation = 0;   // smoothed, rendered every frame
+let targetRotation = 0;    // where we want to end up
+let dragging = false;
+let dragPending = false;
+let dragStartX = 0;
+let dragStartY = 0;
+let dragStartRotation = 0;
+let lastDragX = 0;
+let dragVelocity = 0;
+let lastDragTime = 0;
+
+function buildCard(project, i){
+  const card = document.createElement('article');
+  card.className = 'carousel-card';
+  card.dataset.index = i;
+  card.innerHTML = `
+    <div class="w-full h-full bg-[var(--bg-alt)] border hairline overflow-y-auto card-scroll">
+      <div class="grid md:grid-cols-2 h-full">
+        <div class="relative h-52 md:h-full">
+          <img src="${project.cover}" alt="Pieza principal de ${project.title}" class="w-full h-full object-cover grayscale-[15%]" draggable="false">
+          <div class="absolute top-0 left-0 p-5 md:p-7 flex items-center justify-between w-full">
+            <span class="logo-mark text-base md:text-lg text-[var(--off-white)] opacity-100">${project.client}</span>
+            <span class="tag-pill px-3 py-1 bg-[var(--bg)]/80">${project.category}</span>
+          </div>
+        </div>
+        <div class="p-6 md:p-7 flex flex-col">
+          <h3 class="font-serif-display text-2xl md:text-[1.7rem] leading-snug mb-5">${project.title}</h3>
+
+          <p class="text-xs text-[var(--muted)] mb-2">Aplicaciones de marca</p>
+          <div class="grid grid-cols-3 gap-2 mb-5">
+            ${project.grid.map(src => `<div class="grid-photo aspect-square"><img src="${src}" alt="Aplicación de marca — ${project.client}" class="w-full h-full object-cover" draggable="false"></div>`).join('')}
+          </div>
+
+          <p class="text-xs text-[var(--muted)] mb-2">Pieza en movimiento</p>
+          <div class="relative aspect-video bg-[var(--bg)] border hairline mb-5 flex items-center justify-center group cursor-pointer">
+            <img src="${project.grid[0]}" alt="Miniatura de video de motion — ${project.client}" class="w-full h-full object-cover opacity-40" draggable="false">
+            <div class="absolute w-14 h-14 rounded-full border border-[var(--sand)] flex items-center justify-center group-hover:scale-110 transition-transform">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--sand)"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+
+          <p class="text-xs text-[var(--muted)] mb-2">Campaña &amp; redes</p>
+          <div class="grid grid-cols-2 gap-2">
+            ${project.social.map(src => `<div class="grid-photo aspect-[4/3]"><img src="${src}" alt="Pieza de campaña — ${project.client}" class="w-full h-full object-cover" draggable="false"></div>`).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  return card;
+}
+
+projects.forEach((p, i) => track.appendChild(buildCard(p, i)));
+
+projects.forEach((_, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'w-2 h-2 rounded-full bg-[var(--hairline)] transition-colors';
+  dot.setAttribute('aria-label', `Ir al proyecto ${i + 1}`);
+  dot.addEventListener('click', () => { goTo(i); restartAutoplay(); });
+  dotsWrap.appendChild(dot);
+});
+
+function sizeCylinder(){
+  const stageRect = stage.getBoundingClientRect();
+  const isMobile = window.innerWidth < 768;
+  const widthRatio = isMobile ? 0.92 : 0.8;
+  cardWidthPx = stageRect.width * widthRatio;
+  // radius so that adjacent cards just clear each other around the ring
+  radius = Math.round((cardWidthPx / 2) / Math.tan(Math.PI / total) * 1.02);
+
+  const cards = track.querySelectorAll('.carousel-card');
+  cards.forEach(card => {
+    card.style.width = cardWidthPx + 'px';
+    card.style.height = '100%';
+    card.style.left = ((stageRect.width - cardWidthPx) / 2) + 'px';
+  });
+}
+
+function normalizeAngleDiff(diff){
+  diff = diff % 360;
+  if (diff > 180) diff -= 360;
+  if (diff < -180) diff += 360;
+  return diff;
+}
+
+function renderCylinder(){
+  const cards = track.querySelectorAll('.carousel-card');
+  track.style.transform = `translateZ(${-radius}px) rotateY(${currentRotation}deg)`;
+
+  let frontIndex = 0;
+  let frontDiff = 999;
+
+  cards.forEach((card, i) => {
+    const cardBaseAngle = i * cardAngle;
+    const diff = normalizeAngleDiff(cardBaseAngle - currentRotation);
+    const absDiff = Math.abs(diff);
+    const t = Math.min(absDiff / 130, 1); // 0 = front-facing, 1 = far side
+
+    const opacity = Math.max(1 - t * 1.05, 0);
+    const blur = (t * 7).toFixed(2);
+    const brightness = (1 - t * 0.55).toFixed(2);
+    const scale = (1 - t * 0.22).toFixed(3);
+
+    card.style.transform = `rotateY(${cardBaseAngle}deg) translateZ(${radius}px) scale(${scale})`;
+    card.style.opacity = opacity.toFixed(2);
+    card.style.filter = `brightness(${brightness}) blur(${blur}px)`;
+    card.style.pointerEvents = absDiff < cardAngle / 2 ? 'auto' : 'none';
+    card.classList.toggle('is-front', absDiff < cardAngle / 2);
+
+    if (absDiff < frontDiff){ frontDiff = absDiff; frontIndex = i; }
+  });
+
+  if (frontIndex !== activeIndex && !dragging){
+    activeIndex = frontIndex;
+    updateDots();
+  }
+}
+
+function updateDots(){
+  const dots = dotsWrap.querySelectorAll('button');
+  dots.forEach((dot, i) => {
+    dot.style.backgroundColor = i === activeIndex ? 'var(--terracotta)' : 'var(--hairline)';
+    dot.style.width = i === activeIndex ? '22px' : '8px';
+    dot.style.borderRadius = '4px';
+  });
+}
+
+/* Inertial render loop: lerps currentRotation toward targetRotation every frame */
+function animationLoop(){
+  const ease = dragging ? 1 : 0.1;
+  currentRotation += (targetRotation - currentRotation) * ease;
+  renderCylinder();
+  requestAnimationFrame(animationLoop);
+}
+
+function goTo(index){
+  activeIndex = ((index % total) + total) % total;
+  targetRotation = activeIndex * cardAngle;
+  updateDots();
+}
+
+document.getElementById('next-btn').addEventListener('click', () => { goTo(activeIndex + 1); restartAutoplay(); });
+document.getElementById('prev-btn').addEventListener('click', () => { goTo(activeIndex - 1); restartAutoplay(); });
+
+stage.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight'){ goTo(activeIndex + 1); restartAutoplay(); }
+  if (e.key === 'ArrowLeft'){ goTo(activeIndex - 1); restartAutoplay(); }
+});
+
+/* ---------- Drag / swipe (mouse + touch, unified via Pointer Events) ---------- */
+track.addEventListener('pointerdown', (e) => {
+  // don't start a horizontal drag from inside a scrollable card body —
+  // wait to see if the gesture is horizontal before capturing the pointer
+  dragPending = true;
+  dragging = false;
+  dragStartX = e.clientX;
+  dragStartY = e.clientY;
+  lastDragX = e.clientX;
+  dragStartRotation = currentRotation;
+  dragVelocity = 0;
+  lastDragTime = performance.now();
+});
+
+track.addEventListener('pointermove', (e) => {
+  if (!dragPending && !dragging) return;
+
+  if (dragPending && !dragging){
+    const dx = e.clientX - dragStartX;
+    const dy = e.clientY - dragStartY;
+    if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return; // not enough movement yet
+    if (Math.abs(dy) > Math.abs(dx)){
+      // vertical intent — let the card's internal scroll handle it
+      dragPending = false;
+      return;
+    }
+    // horizontal intent confirmed — begin the carousel drag
+    dragging = true;
+    track.classList.add('grabbing');
+    document.getElementById('cursor-ring')?.classList.add('cursor-drag');
+    pauseAutoplay();
+    track.setPointerCapture(e.pointerId);
+  }
+
+  if (!dragging) return;
+  const now = performance.now();
+  const dt = Math.max(now - lastDragTime, 1);
+  const dx = e.clientX - dragStartX;
+  const stepDx = e.clientX - lastDragX;
+  const sensitivity = 0.28; // degrees per pixel
+  targetRotation = dragStartRotation - dx * sensitivity;
+  currentRotation = targetRotation;
+  dragVelocity = (-stepDx * sensitivity) / dt * 16; // deg per ~frame
+  lastDragX = e.clientX;
+  lastDragTime = now;
+});
+
+function endDrag(e){
+  dragPending = false;
+  if (!dragging) return;
+  dragging = false;
+  track.classList.remove('grabbing');
+  document.getElementById('cursor-ring')?.classList.remove('cursor-drag');
+
+  // apply a touch of momentum before snapping to the nearest card
+  const momentum = Math.max(Math.min(dragVelocity * 3, cardAngle * 1.5), -cardAngle * 1.5);
+  const projected = currentRotation + momentum;
+  const nearestIndex = Math.round(projected / cardAngle);
+  goTo(nearestIndex);
+  restartAutoplay();
+}
+track.addEventListener('pointerup', endDrag);
+track.addEventListener('pointercancel', endDrag);
+track.addEventListener('pointerleave', (e) => { if (dragging && e.buttons === 0) endDrag(e); });
+
+/* ================= CAROUSEL AUTOPLAY + PROGRESS ================= */
+const AUTOPLAY_MS = 6000;
+const progressBar = document.getElementById('carousel-progress-bar');
+let autoplayTimer = null;
+
+function runProgressBar(){
+  progressBar.style.transition = 'none';
+  progressBar.style.width = '0%';
+  void progressBar.offsetWidth;
+  progressBar.style.transition = `width ${AUTOPLAY_MS}ms linear`;
+  progressBar.style.width = '100%';
+}
+
+function startAutoplay(){
+  if (prefersReducedMotion) return;
+  clearInterval(autoplayTimer);
+  runProgressBar();
+  autoplayTimer = setInterval(() => {
+    goTo(activeIndex + 1);
+    runProgressBar();
+  }, AUTOPLAY_MS);
+}
+
+function restartAutoplay(){ startAutoplay(); }
+
+function pauseAutoplay(){
+  clearInterval(autoplayTimer);
+  progressBar.style.transition = 'none';
+}
+
+stage.addEventListener('mouseenter', pauseAutoplay);
+stage.addEventListener('mouseleave', () => { if (!dragging) startAutoplay(); });
+
+sizeCylinder();
+renderCylinder();
+updateDots();
+window.addEventListener('resize', sizeCylinder);
+requestAnimationFrame(animationLoop);
+startAutoplay();
+</script>
+
+</body>
+</html>
