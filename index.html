@@ -77,7 +77,7 @@
     top:0; left:0;
     border-radius:50%;
     pointer-events:none;
-    z-index:9999;
+    z-index:10000; /* Incrementado para superponerse al modal */
     transform:translate(-50%,-50%);
     display:none;
   }
@@ -151,23 +151,11 @@
   }
   .reveal.in-view{ opacity:1; transform:none; }
 
-  .reveal-stagger > *{
-    opacity:0;
-    transform: translateY(22px) scale(.96);
-    transition: opacity .7s cubic-bezier(.16,.8,.24,1), transform .7s cubic-bezier(.16,.8,.24,1);
-    transition-delay: calc(var(--i,0) * 90ms);
-  }
-  .reveal-stagger.in-view > *{ opacity:1; transform:none; }
-
   /* ---------- Marquees ---------- */
   .marquee-wrap{ transform: rotate(-3.5deg) scale(1.05); }
-  .marquee-wrap-alt{ transform: rotate(3deg) scale(1.05); }
   .marquee-track{ display:flex; width:max-content; animation: scroll-left 32s linear infinite; }
   .marquee-track:hover{ animation-play-state: paused; }
-  .marquee-track-alt{ display:flex; width:max-content; animation: scroll-right 24s linear infinite; }
-  .marquee-track-alt:hover{ animation-play-state: paused; }
   @keyframes scroll-left{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
-  @keyframes scroll-right{ from{ transform: translateX(-50%); } to{ transform: translateX(0); } }
 
   /* ---------- Values Cube ---------- */
   .cube-bg-glow{
@@ -175,33 +163,33 @@
     top:50%; left:50%;
     transform:translate(-50%,-50%);
     width:520px; height:520px;
-    background: radial-gradient(circle, rgba(193,101,46,.16) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(193,101,46,.2) 0%, transparent 70%);
     filter: blur(70px);
     pointer-events:none;
     z-index:0;
   }
   .cube-scene{
     width:100%;
-    height:340px;
-    margin:56px 0;
+    height:360px;
+    margin:40px 0;
     display:flex;
     align-items:center;
     justify-content:center;
     perspective:1100px;
     touch-action: pan-y;
   }
-  @media (min-width:768px){ .cube-scene{ height:420px; } }
+  @media (min-width:768px){ .cube-scene{ height:440px; } }
 
   .cube{
     position:relative;
-    width:160px;
-    height:160px;
+    width:170px;
+    height:170px;
     transform-style:preserve-3d;
     transform: rotateX(-18deg) rotateY(-32deg);
     transition: transform .25s cubic-bezier(.22,.75,.2,1);
     will-change: transform;
   }
-  @media (min-width:768px){ .cube{ width:220px; height:220px; } }
+  @media (min-width:768px){ .cube{ width:230px; height:230px; } }
 
   .cube__face{
     position:absolute;
@@ -216,30 +204,53 @@
     font-size:1.05rem;
     letter-spacing:.02em;
     color: var(--off-white);
-    background: linear-gradient(145deg, rgba(193,101,46,0.14), rgba(229,217,197,0.04));
-    border:1px solid var(--hairline);
-    backdrop-filter: blur(2px);
+    background: linear-gradient(145deg, rgba(193,101,46,0.18), rgba(22,21,19,0.75));
+    border:1px solid rgba(229, 217, 197, 0.25);
+    backdrop-filter: blur(5px);
+    box-shadow: inset 0 0 25px rgba(193,101,46,0.15);
   }
   @media (min-width:768px){ .cube__face{ font-size:1.35rem; } }
 
-  .cube__face span{ position:relative; z-index:1; }
+  .cube__face span{ position:relative; z-index:2; text-shadow: 0 2px 8px rgba(0,0,0,0.8); }
 
-  .cube__face--front{ transform: translateZ(80px); }
-  .cube__face--back{ transform: rotateY(180deg) translateZ(80px); }
-  .cube__face--right{ transform: rotateY(90deg) translateZ(80px); }
-  .cube__face--left{ transform: rotateY(-90deg) translateZ(80px); }
-  .cube__face--top{ transform: rotateX(90deg) translateZ(80px); background: linear-gradient(145deg, rgba(193,101,46,0.22), rgba(229,217,197,0.06)); }
-  .cube__face--bottom{ transform: rotateX(-90deg) translateZ(80px); }
+  .cube__face--front{ transform: translateZ(85px); }
+  .cube__face--back{ transform: rotateY(180deg) translateZ(85px); }
+  .cube__face--right{ transform: rotateY(90deg) translateZ(85px); }
+  .cube__face--left{ transform: rotateY(-90deg) translateZ(85px); }
+  .cube__face--top{ transform: rotateX(90deg) translateZ(85px); background: linear-gradient(145deg, rgba(193,101,46,0.3), rgba(229,217,197,0.1)); }
+  .cube__face--bottom{ transform: rotateX(-90deg) translateZ(85px); }
   @media (min-width:768px){
-    .cube__face--front{ transform: translateZ(110px); }
-    .cube__face--back{ transform: rotateY(180deg) translateZ(110px); }
-    .cube__face--right{ transform: rotateY(90deg) translateZ(110px); }
-    .cube__face--left{ transform: rotateY(-90deg) translateZ(110px); }
-    .cube__face--top{ transform: rotateX(90deg) translateZ(110px); background: linear-gradient(145deg, rgba(193,101,46,0.22), rgba(229,217,197,0.06)); }
-    .cube__face--bottom{ transform: rotateX(-90deg) translateZ(110px); }
+    .cube__face--front{ transform: translateZ(115px); }
+    .cube__face--back{ transform: rotateY(180deg) translateZ(115px); }
+    .cube__face--right{ transform: rotateY(90deg) translateZ(115px); }
+    .cube__face--left{ transform: rotateY(-90deg) translateZ(115px); }
+    .cube__face--top{ transform: rotateX(90deg) translateZ(115px); background: linear-gradient(145deg, rgba(193,101,46,0.3), rgba(229,217,197,0.1)); }
+    .cube__face--bottom{ transform: rotateX(-90deg) translateZ(115px); }
   }
 
-  /* ---------- 3D Carousel (del archivo gemini-code) ---------- */
+  /* Brain SVG inside Cube */
+  .cube__brain-core {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 120px;
+    height: 120px;
+    transform-style: preserve-3d;
+    pointer-events: none;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: brainPulse 4s ease-in-out infinite alternate;
+  }
+  @media (min-width:768px){ .cube__brain-core { width: 165px; height: 165px; } }
+
+  @keyframes brainPulse {
+    0% { transform: scale(0.92) rotateY(0deg); filter: drop-shadow(0 0 8px rgba(193,101,46,0.5)); }
+    100% { transform: scale(1.08) rotateY(15deg); filter: drop-shadow(0 0 20px rgba(193,101,46,0.85)); }
+  }
+
+  /* ---------- 3D Carousel ---------- */
   .parallax-bg-wrapper {
     position: absolute;
     inset: 0;
@@ -425,20 +436,8 @@
   }
   .modal-overlay.active .modal-container { transform: scale(1) translateY(0); }
 
-  .modal-overlay.active .gallery-item {
-    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-  @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
   .logo-mark{ font-family:'Syne', sans-serif; font-weight:700; color: var(--muted); opacity:.75; }
-  .keyword-mark{ font-family:'Space Grotesk', sans-serif; font-weight:500; color: var(--sand); opacity:.55; font-size:1.1rem; }
   .hairline{ border-color: var(--hairline); }
-
-  .btn-primary{ background: var(--sand); color: var(--bg); transition: all .3s ease; }
-  .btn-primary:hover{ background: var(--off-white); transform: translateY(-2px); }
 
   .nav-arrow{ border:1px solid var(--hairline); transition: all .3s ease; }
   .nav-arrow:hover{ border-color: var(--terracotta); background: rgba(193, 101, 46, 0.15); transform: scale(1.05); }
@@ -550,7 +549,7 @@
   </div>
 </section>
 
-<!-- ============ DYNAMIC 3D CAROUSEL SECTION ============ -->
+<!-- ============ DYNAMIC 3D CAROUSEL SECTION (10 PROYECTOS) ============ -->
 <section id="trabajo" class="relative px-4 sm:px-8 md:px-10 max-w-[1400px] mx-auto py-12 md:py-20 overflow-hidden rounded-3xl border hairline my-8">
   <div class="parallax-bg-wrapper">
     <div class="parallax-sky" id="parallax-sky"></div>
@@ -559,7 +558,7 @@
   <div class="relative z-10 flex items-end justify-between mb-8 flex-wrap gap-4">
     <div>
       <p class="text-[var(--terracotta)] text-xs md:text-sm mb-1 uppercase tracking-widest font-semibold">Trabajo seleccionado</p>
-      <h2 class="font-serif-display text-3xl sm:text-4xl md:text-5xl">Branding y motion, lado a lado.</h2>
+      <h2 class="font-serif-display text-3xl sm:text-4xl md:text-5xl">Branding, Motion y Estrategia Visual.</h2>
     </div>
 
     <div class="flex items-center gap-3">
@@ -581,7 +580,7 @@
   <div class="carousel-3d-stage" id="carousel-stage"></div>
   <div class="carousel-dots" id="carousel-dots"></div>
 
-  <p class="text-center text-[11px] text-[var(--muted)] mt-6 tracking-widest uppercase">Pasa el cursor sobre la tarjeta principal para ver el giro 3D</p>
+  <p class="text-center text-[11px] text-[var(--muted)] mt-6 tracking-widest uppercase">Pasa el cursor sobre la tarjeta principal para interactuar con el visor 3D</p>
 </section>
 
 <!-- MODAL POPUP -->
@@ -596,14 +595,14 @@
       <span id="modal-category" class="category-badge mb-3 inline-block">Categoría</span>
       <h2 id="modal-title" class="font-serif-display text-3xl sm:text-5xl mt-1 mb-4">Título del Proyecto</h2>
       <p id="modal-description" class="text-[var(--muted)] text-base sm:text-lg leading-relaxed max-w-2xl mb-8">
-        Descripción detallada.
+        Descripción detallada del proyecto.
       </p>
       <div id="modal-gallery" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
     </div>
   </div>
 </div>
 
-<!-- ============ PRINCIPLES CUBE ============ -->
+<!-- ============ PRINCIPLES CUBE (CON CEREBRO DE NODOS PLEXUS REDISEÑADO) ============ -->
 <section id="principios" class="relative px-6 md:px-10 max-w-[1400px] mx-auto py-16 md:py-28 border-t hairline">
   <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
     <div class="cube-bg-glow"></div>
@@ -611,11 +610,81 @@
 
   <div class="relative z-10 text-center reveal">
     <p class="text-[var(--terracotta)] text-sm mb-4">Cómo trabajo</p>
-    <h2 class="font-serif-display text-4xl md:text-5xl leading-tight max-w-2xl mx-auto">Seis caras, un mismo criterio.</h2>
+    <h2 class="font-serif-display text-4xl md:text-5xl leading-tight max-w-2xl mx-auto">Seis caras, un núcleo creativo.</h2>
   </div>
 
   <div class="cube-scene relative z-10" id="cube-scene">
     <div class="cube" id="values-cube">
+      <!-- CEREBRO PLEXUS REDISEÑADO SEGÚN REFERENCIA -->
+      <div class="cube__brain-core">
+        <svg viewBox="0 0 300 260" width="100%" height="100%" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Red de Conexiones (Lineas Trianguladas) -->
+          <g stroke="#E5D9C5" stroke-width="0.75" opacity="0.45">
+            <!-- Silueta Superior Lóbulo Frontal / Parietal -->
+            <line x1="75" y1="110" x2="90" y2="80"/><line x1="90" y1="80" x2="115" y2="60"/><line x1="115" y1="60" x2="145" y2="50"/>
+            <line x1="145" y1="50" x2="180" y2="52"/><line x1="180" y1="52" x2="210" y2="65"/><line x1="210" y1="65" x2="235" y2="90"/>
+            <!-- Silueta Posterior Occipital / Temporal -->
+            <line x1="235" y1="90" x2="250" y2="120"/><line x1="250" y1="120" x2="242" y2="150"/><line x1="242" y1="150" x2="225" y2="170"/>
+            <line x1="225" y1="170" x2="195" y2="180"/><line x1="195" y1="180" x2="170" y2="175"/>
+            <!-- Cerebelo y Tallo -->
+            <line x1="170" y1="175" x2="155" y2="200"/><line x1="155" y1="200" x2="145" y2="230"/><line x1="145" y1="230" x2="135" y2="245"/>
+            <line x1="135" y1="245" x2="120" y2="230"/><line x1="120" y1="230" x2="130" y2="195"/><line x1="130" y1="195" x2="110" y2="185"/>
+            <line x1="110" y1="185" x2="85" y2="170"/><line x1="85" y1="170" x2="70" y2="145"/><line x1="70" y1="145" x2="75" y2="110"/>
+
+            <!-- Red de Triangulación Interna Densa -->
+            <line x1="90" y1="80" x2="110" y2="95"/><line x1="115" y1="60" x2="110" y2="95"/><line x1="115" y1="60" x2="140" y2="80"/>
+            <line x1="145" y1="50" x2="140" y2="80"/><line x1="145" y1="50" x2="170" y2="75"/><line x1="180" y1="52" x2="170" y2="75"/>
+            <line x1="180" y1="52" x2="200" y2="85"/><line x1="210" y1="65" x2="200" y2="85"/><line x1="210" y1="65" x2="225" y2="105"/>
+            <line x1="235" y1="90" x2="225" y2="105"/><line x1="235" y1="90" x2="215" y2="125"/><line x1="250" y1="120" x2="215" y2="125"/>
+
+            <line x1="75" y1="110" x2="100" y2="120"/><line x1="110" y1="95" x2="100" y2="120"/><line x1="110" y1="95" x2="135" y2="105"/>
+            <line x1="140" y1="80" x2="135" y2="105"/><line x1="140" y1="80" x2="165" y2="100"/><line x1="170" y1="75" x2="165" y2="100"/>
+            <line x1="170" y1="75" x2="190" y2="110"/><line x1="200" y1="85" x2="190" y2="110"/><line x1="225" y1="105" x2="190" y2="110"/>
+
+            <line x1="70" y1="145" x2="95" y2="140"/><line x1="100" y1="120" x2="95" y2="140"/><line x1="100" y1="120" x2="125" y2="130"/>
+            <line x1="135" y1="105" x2="125" y2="130"/><line x1="135" y1="105" x2="155" y2="125"/><line x1="165" y1="100" x2="155" y2="125"/>
+            <line x1="165" y1="100" x2="185" y2="135"/><line x1="190" y1="110" x2="185" y2="135"/><line x1="215" y1="125" x2="185" y2="135"/>
+            <line x1="250" y1="120" x2="220" y2="145"/><line x1="242" y1="150" x2="220" y2="145"/><line x1="215" y1="125" x2="220" y2="145"/>
+
+            <line x1="85" y1="170" x2="110" y2="155"/><line x1="95" y1="140" x2="110" y2="155"/><line x1="125" y1="130" x2="110" y2="155"/>
+            <line x1="125" y1="130" x2="145" y2="150"/><line x1="155" y1="125" x2="145" y2="150"/><line x1="155" y1="125" x2="175" y2="155"/>
+            <line x1="185" y1="135" x2="175" y2="155"/><line x1="185" y1="135" x2="205" y2="160"/><line x1="220" y1="145" x2="205" y2="160"/>
+            <line x1="225" y1="170" x2="205" y2="160"/>
+
+            <line x1="110" y1="185" x2="135" y2="170"/><line x1="110" y1="155" x2="135" y2="170"/><line x1="145" y1="150" x2="135" y2="170"/>
+            <line x1="145" y1="150" x2="165" y2="170"/><line x1="175" y1="155" x2="165" y2="170"/><line x1="195" y1="180" x2="165" y2="170"/>
+
+            <!-- Entramado denso en cerebelo / base de tallo -->
+            <line x1="130" y1="195" x2="145" y2="210"/><line x1="155" y1="200" x2="145" y2="210"/><line x1="120" y1="230" x2="138" y2="225"/>
+            <line x1="145" y1="230" x2="138" y2="225"/><line x1="145" y1="210" x2="138" y2="225"/>
+          </g>
+
+          <!-- Nodos de Inserción (Puntos de la Red) -->
+          <g fill="#C1652E">
+            <!-- Nodos destacados en Terracota -->
+            <circle cx="115" cy="60" r="2.5"/><circle cx="170" cy="75" r="2.5"/><circle cx="135" cy="105" r="3"/>
+            <circle cx="185" cy="135" r="2.8"/><circle cx="110" cy="155" r="2.5"/><circle cx="145" cy="210" r="2.5"/>
+          </g>
+          <g fill="#E5D9C5">
+            <!-- Nodos Perimetrales e Internos -->
+            <circle cx="75" cy="110" r="1.8"/><circle cx="90" cy="80" r="2"/><circle cx="145" cy="50" r="2.2"/>
+            <circle cx="180" cy="52" r="2"/><circle cx="210" cy="65" r="2.2"/><circle cx="235" cy="90" r="2"/>
+            <circle cx="250" cy="120" r="2.2"/><circle cx="242" cy="150" r="1.8"/><circle cx="225" cy="170" r="2"/>
+            <circle cx="195" cy="180" r="2.2"/><circle cx="170" cy="175" r="1.8"/><circle cx="155" cy="200" r="2"/>
+            <circle cx="145" cy="230" r="1.8"/><circle cx="135" cy="245" r="1.6"/><circle cx="120" cy="230" r="1.8"/>
+            <circle cx="130" cy="195" r="2"/><circle cx="110" cy="185" r="1.8"/><circle cx="85" cy="170" r="2"/>
+            <circle cx="70" cy="145" r="1.8"/><circle cx="110" cy="95" r="2"/><circle cx="140" cy="80" r="2"/>
+            <circle cx="200" cy="85" r="2"/><circle cx="225" cy="105" r="1.8"/><circle cx="100" cy="120" r="2"/>
+            <circle cx="165" cy="100" r="2.2"/><circle cx="190" cy="110" r="2"/><circle cx="215" cy="125" r="1.8"/>
+            <circle cx="95" cy="140" r="2"/><circle cx="125" cy="130" r="2"/><circle cx="155" cy="125" r="2.2"/>
+            <circle cx="220" cy="145" r="1.8"/><circle cx="145" cy="150" r="2"/><circle cx="175" cy="155" r="2"/>
+            <circle cx="205" cy="160" r="1.8"/><circle cx="135" cy="170" r="2"/><circle cx="165" cy="170" r="2"/>
+            <circle cx="138" cy="225" r="1.6"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- CARAS DEL CUBO CON GLASSMORPHISM -->
       <div class="cube__face cube__face--front"><span>Creatividad</span></div>
       <div class="cube__face cube__face--back"><span>Puntualidad</span></div>
       <div class="cube__face cube__face--right"><span>Compromiso</span></div>
@@ -626,7 +695,7 @@
   </div>
 
   <div class="relative z-10 flex flex-col items-center gap-6">
-    <p class="text-[11px] tracking-widest uppercase text-[var(--muted)]">Mueve el cursor o desliza sobre el cubo</p>
+    <p class="text-[11px] tracking-widest uppercase text-[var(--muted)]">Mueve el cursor o desliza sobre el cubo para inspeccionar el núcleo</p>
   </div>
 </section>
 
@@ -639,7 +708,7 @@
     </div>
     <div class="md:col-span-7">
       <p class="text-[var(--muted)] leading-relaxed text-base md:text-lg">
-        Especializado en sistemas de marca dinámicos, dirección de arte e identidades visuales con movimiento para proyectos globales.
+        Especializado en sistemas de marca dinámicos, dirección de arte e identidades visuales con movimiento para proyectos globales. Mi enfoque combina la rigurosidad conceptual con la ejecución técnica precisa.
       </p>
     </div>
   </div>
@@ -710,290 +779,420 @@ const dynamicWordEl = document.getElementById('dynamic-word');
 const wordStates = [
   { text: 'intención', font: "'Playfair Display', serif", style: 'italic', weight: 600, color: 'var(--sand)' },
   { text: 'criterio', font: "'Cinzel', serif", style: 'normal', weight: 600, color: 'var(--terracotta)' },
-  { text: 'propósito', font: "'Caveat', cursive", style: 'normal', weight: 700, color: 'var(--off-white)' },
-  { text: 'carácter', font: "'Syne', sans-serif", style: 'normal', weight: 700, color: 'var(--sand)' }
+  { text: 'carácter', font: "'Syne', sans-serif", style: 'normal', weight: 800, color: 'var(--off-white)' },
+  { text: 'precisión', font: "'Space Grotesk', sans-serif", style: 'normal', weight: 700, color: 'var(--sand)' },
+  { text: 'visión', font: "'Caveat', cursive", style: 'normal', weight: 700, color: 'var(--terracotta)' }
 ];
 let wordIndex = 0;
-function applyWordState(state) {
-  dynamicWordEl.textContent = state.text;
-  dynamicWordEl.style.fontFamily = state.font;
-  dynamicWordEl.style.fontStyle = state.style;
-  dynamicWordEl.style.fontWeight = state.weight;
-  dynamicWordEl.style.color = state.color;
-}
+
 setInterval(() => {
   dynamicWordEl.classList.add('swap');
   setTimeout(() => {
     wordIndex = (wordIndex + 1) % wordStates.length;
-    applyWordState(wordStates[wordIndex]);
+    const current = wordStates[wordIndex];
+    dynamicWordEl.textContent = current.text;
+    dynamicWordEl.style.fontFamily = current.font;
+    dynamicWordEl.style.fontStyle = current.style;
+    dynamicWordEl.style.fontWeight = current.weight;
+    dynamicWordEl.style.color = current.color;
     dynamicWordEl.classList.remove('swap');
-  }, 420);
-}, 2700);
+  }, 450);
+}, 3200);
 
-/* ================= HERO INTRO ANIMATION ================= */
+/* ================= HERO ENTRANCE ANIMATION ================= */
 window.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('hero-intro').classList.add('in-view');
-  document.getElementById('photo-mask').classList.add('in-view');
-  document.getElementById('hero-badge').classList.add('in-view');
+  document.getElementById('hero-intro')?.classList.add('in-view');
+  document.getElementById('photo-mask')?.classList.add('in-view');
+  document.getElementById('hero-badge')?.classList.add('in-view');
 });
 
-/* ================= VALUES CUBE ================= */
-(function(){
-  const scene = document.getElementById('cube-scene');
-  const cube = document.getElementById('values-cube');
-  if (!scene || !cube) return;
+/* ================= HERO PHOTO TILT ================= */
+const photoTilt = document.getElementById('photo-tilt');
+if (photoTilt && isFinePointer) {
+  window.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 12;
+    const y = (e.clientY / window.innerHeight - 0.5) * 12;
+    photoTilt.style.transform = `scale(1.05) translate3d(${x}px, ${y}px, 0)`;
+  });
+}
 
-  const BASE_RX = -18, BASE_RY = -32;
-  let targetRX = BASE_RX, targetRY = BASE_RY;
-  let currentRX = BASE_RX, currentRY = BASE_RY;
-  let hovering = false;
-  let idleAngle = 0;
+/* ================= SCROLL REVEAL ================= */
+const observerOptions = { threshold: 0.12 };
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+    }
+  });
+}, observerOptions);
 
-  function pointerMove(e){
-    const rect = scene.getBoundingClientRect();
-    const px = ((e.clientX - rect.left) / rect.width) - 0.5;
-    const py = ((e.clientY - rect.top) / rect.height) - 0.5;
-    targetRY = px * 70;
-    targetRX = py * -70;
-  }
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  scene.addEventListener('mouseenter', () => hovering = true);
-  scene.addEventListener('mousemove', pointerMove);
-  scene.addEventListener('mouseleave', () => {
-    hovering = false;
-    targetRX = BASE_RX;
-    targetRY = BASE_RY;
+/* ================= VALUES CUBE INTERACTION ================= */
+const cube = document.getElementById('values-cube');
+const cubeScene = document.getElementById('cube-scene');
+if (cube && cubeScene) {
+  let isDragging = false, startX = 0, startY = 0;
+  let rotX = -18, rotY = -32;
+
+  const updateCubeRotation = (x, y) => {
+    cube.style.transform = `rotateX(${x}deg) rotateY(${y}deg)`;
+  };
+
+  cubeScene.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
   });
 
-  scene.addEventListener('touchmove', (e) => {
-    if (e.touches[0]) pointerMove(e.touches[0]);
+  window.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+      const deltaX = e.clientX - startX;
+      const deltaY = e.clientY - startY;
+      rotY += deltaX * 0.4;
+      rotX -= deltaY * 0.4;
+      startX = e.clientX;
+      startY = e.clientY;
+      updateCubeRotation(rotX, rotY);
+    } else if (isFinePointer) {
+      const rect = cubeScene.getBoundingClientRect();
+      if (e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom) {
+        const cX = rect.left + rect.width / 2;
+        const cY = rect.top + rect.height / 2;
+        const offX = (e.clientX - cX) / (rect.width / 2);
+        const offY = (e.clientY - cY) / (rect.height / 2);
+        updateCubeRotation(-18 - offY * 25, -32 + offX * 35);
+      }
+    }
+  });
+
+  window.addEventListener('mouseup', () => { isDragging = false; });
+
+  cubeScene.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
   }, { passive: true });
 
-  function tick(){
-    if (!hovering){
-      idleAngle += 0.12;
-      targetRY = BASE_RY + Math.sin(idleAngle * Math.PI / 180) * 14;
+  window.addEventListener('touchmove', (e) => {
+    if (isDragging && e.touches[0]) {
+      const deltaX = e.touches[0].clientX - startX;
+      const deltaY = e.touches[0].clientY - startY;
+      rotY += deltaX * 0.5;
+      rotX -= deltaY * 0.5;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      updateCubeRotation(rotX, rotY);
     }
-    currentRX += (targetRX - currentRX) * 0.08;
-    currentRY += (targetRY - currentRY) * 0.08;
-    cube.style.transform = `rotateX(${currentRX}deg) rotateY(${currentRY}deg)`;
-    requestAnimationFrame(tick);
-  }
-  tick();
-})();
+  }, { passive: true });
 
-/* ================= 3D CAROUSEL (gemini-code) ================= */
+  window.addEventListener('touchend', () => { isDragging = false; });
+}
+
+/* ================= 3D CAROUSEL DATA & LOGIC ================= */
 const projects = [
   {
     id: 1,
-    title: 'Flow — Experiencia Costera',
-    category: 'Branding & Identity',
-    cover: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop',
-    description: 'Sistema visual completo desarrollado para una marca turística boutique. Enfocado en tonos cálidos mediterráneos y fotografía editorial limpia.',
-    media: [
-      { type: 'image', url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1000&auto=format&fit=crop' },
-      { type: 'image', url: 'https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?q=80&w=1000&auto=format&fit=crop' }
+    title: "Arka Studio",
+    category: "Branding",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000&auto=format&fit=crop",
+    description: "Sistema de identidad visual integral y dirección gráfica para estudio de arquitectura premium.",
+    gallery: [
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1000&auto=format&fit=crop"
     ]
   },
   {
     id: 2,
-    title: 'Vespa Nostalgia — Rutas Urbanas',
-    category: 'Campaign & Motion',
-    cover: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=800&auto=format&fit=crop',
-    description: 'Dirección de arte y campaña audiovisual para transporte urbano retro. Combinación de estética mid-century con animación digital dinámica.',
-    media: [
-      { type: 'image', url: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=1000&auto=format&fit=crop' },
-      { type: 'image', url: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?q=80&w=1000&auto=format&fit=crop' }
+    title: "Norden & Co",
+    category: "Editorial",
+    image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1000&auto=format&fit=crop",
+    description: "Diseño editorial y maquetación de catálogo corporativo minimalista para firma nórdica.",
+    gallery: [
+      "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=1000&auto=format&fit=crop"
     ]
   },
   {
     id: 3,
-    title: 'Aura Studio — Arquitectura',
-    category: 'Visual Identity',
-    cover: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop',
-    description: 'Branding minimalista para un estudio de arquitectura contemporánea. Énfasis en materiales orgánicos y retículas strictly.',
-    media: [
-      { type: 'image', url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000&auto=format&fit=crop' },
-      { type: 'image', url: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1000&auto=format&fit=crop' }
+    title: "Velar Motion",
+    category: "Motion Graphics",
+    image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop",
+    description: "Secuencias dinámicas y animación de marca en 3D para plataforma tecnológica de streaming.",
+    gallery: [
+      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1000&auto=format&fit=crop"
     ]
   },
   {
     id: 4,
-    title: 'Velar App — Fintech UI',
-    category: 'Motion Graphics',
-    cover: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop',
-    description: 'Sistema de diseño e identidades animadas para una aplicación de finanzas personales. Transiciones fluidas y componentes interactivos.',
-    media: [
-      { type: 'image', url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop' },
-      { type: 'image', url: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1000&auto=format&fit=crop' }
+    title: "Muelle 9",
+    category: "Campaigns",
+    image: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1000&auto=format&fit=crop",
+    description: "Campaña publicitaria multicanal y dirección de arte para restaurante de alta cocina marina.",
+    gallery: [
+      "https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1000&auto=format&fit=crop"
     ]
   },
   {
     id: 5,
-    title: 'Muelle 9 — Café Especial',
-    category: 'Packaging',
-    cover: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=800&auto=format&fit=crop',
-    description: 'Diseño de empaques sostenibles e ilustración personalizada para granos de café de origen.',
-    media: [
-      { type: 'image', url: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=800&auto=format&fit=crop' }
+    title: "Halcón Capital",
+    category: "Branding",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop",
+    description: "Rebranding corporativo y papelería institucional para fondo de inversión privado.",
+    gallery: [
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1000&auto=format&fit=crop"
     ]
   },
   {
     id: 6,
-    title: 'Kiva Skin — Cosmética',
-    category: 'Branding',
-    cover: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=800&auto=format&fit=crop',
-    description: 'Campaña de lanzamiento global para una línea de belleza natural. Fotografía editorial suave y empaques satinados.',
-    media: [
-      { type: 'image', url: 'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1000&auto=format&fit=crop' }
+    title: "Tierra Firme",
+    category: "Packaging",
+    image: "https://images.unsplash.com/photo-1527061011665-3652c757a4d4?q=80&w=1000&auto=format&fit=crop",
+    description: "Diseño de empaques sostenibles y etiqueta artesanal para línea de vinos de autor.",
+    gallery: [
+      "https://images.unsplash.com/photo-1527061011665-3652c757a4d4?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=1000&auto=format&fit=crop"
+    ]
+  },
+  {
+    id: 7,
+    title: "Kroma Fest",
+    category: "Visual Identity",
+    image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1000&auto=format&fit=crop",
+    description: "Identidad gráfica para festival de música, diseño de posters y assets para redes sociales.",
+    gallery: [
+      "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?q=80&w=1000&auto=format&fit=crop"
+    ]
+  },
+  {
+    id: 8,
+    title: "Aura Skincare",
+    category: "Packaging",
+    image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=1000&auto=format&fit=crop",
+    description: "Estrategia visual y diseño de packaging minimalista para marca de cosmética orgánica.",
+    gallery: [
+      "https://images.unsplash.com/photo-1556228720-195a672e8a03?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1000&auto=format&fit=crop"
+    ]
+  },
+  {
+    id: 9,
+    title: "Nexus Tech",
+    category: "UI / Motion",
+    image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1000&auto=format&fit=crop",
+    description: "Prototipado interactivo, microinteracciones y diseño de interfaz para SaaS de inteligencia de datos.",
+    gallery: [
+      "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1000&auto=format&fit=crop"
+    ]
+  },
+  {
+    id: 10,
+    title: "Urban Pulse",
+    category: "Art Direction",
+    image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1000&auto=format&fit=crop",
+    description: "Dirección de arte fotográfica y producción gráfica para campaña urbana de moda street style.",
+    gallery: [
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1000&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1000&auto=format&fit=crop"
     ]
   }
 ];
 
+const carouselStage = document.getElementById('carousel-stage');
+const carouselDots = document.getElementById('carousel-dots');
+const prevBtn = document.getElementById('carousel-prev');
+const nextBtn = document.getElementById('carousel-next');
+const skyBg = document.getElementById('parallax-sky');
+
 let currentIndex = 0;
-const stage = document.getElementById('carousel-stage');
-const dotsContainer = document.getElementById('carousel-dots');
-let cardElements = [];
+const totalProjects = projects.length;
 
-function initCarouselNodes() {
-  stage.innerHTML = '';
-  cardElements = projects.map((proj, idx) => {
-    const card = document.createElement('div');
-    card.className = 'carousel-3d-card';
-    card.innerHTML = `
-      <div class="carousel-card-inner">
-        <img src="${proj.cover}" alt="${proj.title}" loading="lazy">
-        <div class="card-info-overlay">
-          <span class="category-badge">${proj.category}</span>
-          <div>
-            <h3 class="font-serif-display text-lg sm:text-xl text-white font-medium leading-snug">${proj.title}</h3>
-            <p class="explore-btn text-[11px] text-[var(--sand)] opacity-90 mt-1 font-sans hidden">Explorar proyecto →</p>
-          </div>
-        </div>
-      </div>
-    `;
-
-    card.addEventListener('mousemove', (e) => {
-      if (!card.classList.contains('active-card') || window.innerWidth < 640) return;
-      card.classList.add('hovering');
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-      const rotateXCalculated = -y / 10;
-      const rotateYCalculated = x / 10;
-      card.style.transform = `translateX(0px) translateZ(30px) rotateX(${rotateXCalculated}deg) rotateY(${rotateYCalculated}deg) scale(1.04)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-      if (!card.classList.contains('active-card')) return;
-      card.classList.remove('hovering');
-      card.style.transform = `translateX(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) scale(1)`;
-    });
-
-    card.addEventListener('click', () => {
-      if (card.classList.contains('active-card')) {
-        openModal(proj);
-      } else {
-        currentIndex = idx;
-        updateCarouselPositions();
-      }
-    });
-
-    stage.appendChild(card);
-    return card;
-  });
-  
-  createDots();
-  updateCarouselPositions();
-}
-
-function createDots() {
-  dotsContainer.innerHTML = '';
-  projects.forEach((_, idx) => {
-    const dot = document.createElement('div');
-    dot.className = `dot ${idx === currentIndex ? 'active' : ''}`;
-    dot.addEventListener('click', () => {
-      currentIndex = idx;
-      updateCarouselPositions();
-    });
-    dotsContainer.appendChild(dot);
-  });
-}
-
-function updateCarouselPositions() {
-  const total = projects.length;
-  const isMobile = window.innerWidth < 640;
-  const spacing = isMobile ? 130 : 220;
-
-  cardElements.forEach((card, idx) => {
-    let offset = idx - currentIndex;
-    if (offset > total / 2) offset -= total;
-    if (offset < -total / 2) offset += total;
-
-    const absOffset = Math.abs(offset);
-    const isActive = offset === 0;
-
-    card.classList.remove('hovering');
-
-    if (isActive) {
-      card.classList.add('active-card');
-      card.querySelector('.explore-btn').classList.remove('hidden');
-    } else {
-      card.classList.remove('active-card');
-      card.querySelector('.explore-btn').classList.add('hidden');
-    }
-
-    const translateX = offset * spacing;
-    const translateZ = -absOffset * (isMobile ? 150 : 200);
-    const rotateY = offset * (isMobile ? -28 : -32);
-    const scale = Math.max(1 - absOffset * 0.18, 0.5);
-    const opacity = absOffset > 2 ? 0 : Math.max(1 - absOffset * 0.38, 0);
-
-    card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
-    card.style.opacity = opacity;
-    card.style.zIndex = 100 - absOffset;
-    card.style.pointerEvents = opacity === 0 ? 'none' : 'auto';
-  });
-
-  const dots = dotsContainer.querySelectorAll('.dot');
-  dots.forEach((dot, idx) => {
-    dot.className = `dot ${idx === currentIndex ? 'active' : ''}`;
-  });
-}
-
-document.getElementById('carousel-next').addEventListener('click', () => {
-  currentIndex = (currentIndex + 1) % projects.length;
-  updateCarouselPositions();
-});
-
-document.getElementById('carousel-prev').addEventListener('click', () => {
-  currentIndex = (currentIndex - 1 + projects.length) % projects.length;
-  updateCarouselPositions();
-});
-
-window.addEventListener('resize', updateCarouselPositions);
-initCarouselNodes();
-
-/* MODAL */
+// Modal Elements
 const modal = document.getElementById('project-modal');
+const modalClose = document.getElementById('modal-close');
 const modalTitle = document.getElementById('modal-title');
 const modalCategory = document.getElementById('modal-category');
 const modalDescription = document.getElementById('modal-description');
 const modalGallery = document.getElementById('modal-gallery');
 
+function buildCarousel() {
+  carouselStage.innerHTML = '';
+  carouselDots.innerHTML = '';
+
+  projects.forEach((proj, idx) => {
+    // Crear tarjeta
+    const card = document.createElement('div');
+    card.className = 'carousel-3d-card';
+    card.dataset.index = idx;
+
+    card.innerHTML = `
+      <div class="carousel-card-inner">
+        <img src="${proj.image}" alt="${proj.title}" loading="lazy">
+        <div class="card-info-overlay">
+          <div>
+            <span class="category-badge">${proj.category}</span>
+          </div>
+          <div>
+            <h3 class="font-serif-display text-2xl font-bold text-white mb-1">${proj.title}</h3>
+            <p class="text-xs text-[#D5CEBF] line-clamp-2">${proj.description}</p>
+          </div>
+        </div>
+      </div>
+    `;
+
+    card.addEventListener('click', () => {
+      if (idx === currentIndex) {
+        openModal(proj);
+      } else {
+        currentIndex = idx;
+        updateCarousel();
+      }
+    });
+
+    carouselStage.appendChild(card);
+
+    // Crear dot
+    const dot = document.createElement('button');
+    dot.className = `dot ${idx === currentIndex ? 'active' : ''}`;
+    dot.ariaLabel = `Ir al proyecto ${idx + 1}`;
+    dot.addEventListener('click', () => {
+      currentIndex = idx;
+      updateCarousel();
+    });
+    carouselDots.appendChild(dot);
+  });
+
+  updateCarousel();
+}
+
+function updateCarousel() {
+  const cards = document.querySelectorAll('.carousel-3d-card');
+  const dots = document.querySelectorAll('.dot');
+
+  cards.forEach((card, idx) => {
+    let offset = idx - currentIndex;
+
+    // Normalizar ciclo circular para carrusel infinito
+    if (offset > totalProjects / 2) offset -= totalProjects;
+    if (offset < -totalProjects / 2) offset += totalProjects;
+
+    const absOffset = Math.abs(offset);
+    card.classList.remove('active-card', 'hovering');
+    card.style.transform = '';
+
+    if (offset === 0) {
+      // Tarjeta Central
+      card.classList.add('active-card');
+      card.style.transform = `translateX(0px) translateZ(160px) rotateY(0deg) scale(1)`;
+      card.style.opacity = '1';
+      card.style.zIndex = '30';
+      card.style.pointerEvents = 'auto';
+    } else if (absOffset <= 2) {
+      // Tarjetas Laterales Visibles
+      const direction = offset > 0 ? 1 : -1;
+      const translateX = direction * (absOffset === 1 ? 260 : 440);
+      const translateZ = -absOffset * 120;
+      const rotateY = -direction * (absOffset === 1 ? 28 : 45);
+      const opacity = absOffset === 1 ? 0.75 : 0.35;
+
+      card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${1 - absOffset * 0.12})`;
+      card.style.opacity = `${opacity}`;
+      card.style.zIndex = `${20 - absOffset}`;
+      card.style.pointerEvents = 'auto';
+    } else {
+      // Ocultar resto de tarjetas
+      const direction = offset > 0 ? 1 : -1;
+      card.style.transform = `translateX(${direction * 600}px) translateZ(-400px) scale(0.5)`;
+      card.style.opacity = '0';
+      card.style.zIndex = '0';
+      card.style.pointerEvents = 'none';
+    }
+  });
+
+  dots.forEach((dot, idx) => {
+    dot.classList.toggle('active', idx === currentIndex);
+  });
+
+  // Parallax de fondo según el proyecto seleccionado
+  if (skyBg) {
+    skyBg.style.transform = `translateX(${-(currentIndex * 4)}%) translateY(${(currentIndex % 3) * 2}%) scale(1.05)`;
+  }
+}
+
+// Tilt 3D dinámico en la tarjeta activa
+carouselStage.addEventListener('mousemove', (e) => {
+  const activeCard = document.querySelector('.carousel-3d-card.active-card');
+  if (!activeCard || !isFinePointer) return;
+
+  const rect = activeCard.getBoundingClientRect();
+  if (e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom) {
+    activeCard.classList.add('hovering');
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    const rotX = -y / 12;
+    const rotY = x / 12;
+    activeCard.style.transform = `translateX(0px) translateZ(180px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.03)`;
+  } else {
+    activeCard.classList.remove('hovering');
+    activeCard.style.transform = `translateX(0px) translateZ(160px) rotateY(0deg) scale(1)`;
+  }
+});
+
+carouselStage.addEventListener('mouseleave', () => {
+  const activeCard = document.querySelector('.carousel-3d-card.active-card');
+  if (activeCard) {
+    activeCard.classList.remove('hovering');
+    activeCard.style.transform = `translateX(0px) translateZ(160px) rotateY(0deg) scale(1)`;
+  }
+});
+
+// Botones de Navegación
+prevBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + totalProjects) % totalProjects;
+  updateCarousel();
+});
+
+nextBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % totalProjects;
+  updateCarousel();
+});
+
+// Soporte Swipe / Touch para móviles
+let touchStartX = 0;
+carouselStage.addEventListener('touchstart', (e) => {
+  touchStartX = e.touches[0].clientX;
+}, { passive: true });
+
+carouselStage.addEventListener('touchend', (e) => {
+  const touchEndX = e.changedTouches[0].clientX;
+  const deltaX = touchEndX - touchStartX;
+
+  if (Math.abs(deltaX) > 40) {
+    if (deltaX < 0) {
+      currentIndex = (currentIndex + 1) % totalProjects;
+    } else {
+      currentIndex = (currentIndex - 1 + totalProjects) % totalProjects;
+    }
+    updateCarousel();
+  }
+}, { passive: true });
+
+/* ================= MODAL LOGIC ================= */
 function openModal(project) {
   modalTitle.textContent = project.title;
   modalCategory.textContent = project.category;
   modalDescription.textContent = project.description;
 
-  modalGallery.innerHTML = '';
-  project.media.forEach((item, index) => {
-    const container = document.createElement('div');
-    container.className = 'gallery-item rounded-2xl overflow-hidden border hairline bg-black aspect-video opacity-0';
-    container.style.animationDelay = `${index * 0.12}s`;
-    container.innerHTML = `<img src="${item.url}" alt="${project.title}" class="w-full h-full object-cover">`;
-    modalGallery.appendChild(container);
-  });
+  modalGallery.innerHTML = project.gallery.map(imgUrl => `
+    <div class="rounded-xl overflow-hidden border hairline bg-black aspect-video">
+      <img src="${imgUrl}" alt="${project.title}" class="w-full h-full object-cover">
+    </div>
+  `).join('');
 
   modal.classList.add('active');
   modal.setAttribute('aria-hidden', 'false');
@@ -1006,15 +1205,16 @@ function closeModal() {
   document.body.style.overflow = '';
 }
 
-document.getElementById('modal-close').addEventListener('click', closeModal);
-modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('active')) closeModal(); });
-
-/* PARALLAX EFFECT */
-const parallaxSky = document.getElementById('parallax-sky');
-window.addEventListener('scroll', () => {
-  if (parallaxSky) parallaxSky.style.transform = `translateY(${window.scrollY * 0.15}px)`;
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) closeModal();
 });
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+});
+
+// Inicializar carrusel
+buildCarousel();
 </script>
 </body>
 </html>
