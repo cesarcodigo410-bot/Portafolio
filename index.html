@@ -6,9 +6,26 @@
 <title>Senior Graphic Designer — Branding · Campaigns · Visual Communication · Motion</title>
 <meta name="description" content="Portafolio de Senior Graphic Designer & Art Director especializado en Branding, Campaigns, Visual Communication y Motion. Identidad de marca, dirección de arte y diseño con intención.">
 <meta name="keywords" content="Senior Graphic Designer, Art Direction, Branding, Motion Graphics, Visual Identity, Adobe Creative Cloud, Campaigns, Visual Communication">
+<meta name="theme-color" content="#111111">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23111111'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='58' fill='%23C1652E' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="M. Reyes — Senior Graphic Designer &amp; Art Director">
+<meta property="og:description" content="Portafolio de Senior Graphic Designer & Art Director especializado en Branding, Campaigns, Visual Communication y Motion.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1200&auto=format&fit=crop">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="M. Reyes — Senior Graphic Designer &amp; Art Director">
+<meta name="twitter:description" content="Portafolio de Senior Graphic Designer & Art Director especializado en Branding, Campaigns, Visual Communication y Motion.">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1200&auto=format&fit=crop">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="preconnect" href="https://placehold.co">
+<link rel="preconnect" href="https://picsum.photos">
+<link rel="preconnect" href="https://fastly.picsum.photos" crossorigin>
+<link rel="preconnect" href="https://cdn.tailwindcss.com">
+<link rel="preload" as="image" href="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1200&auto=format&fit=crop" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Space+Grotesk:wght@300;400;500;600;700&family=Cinzel:wght@500;600&family=Caveat:wght@600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -28,7 +45,12 @@
   html{ scroll-behavior:smooth; }
 
   body{
-    background: var(--bg);
+    background-color: var(--bg);
+    background-image:
+      radial-gradient(rgba(229, 217, 197, 0.07) 1px, transparent 1px),
+      radial-gradient(rgba(193, 101, 46, 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: 0 0, 12px 12px;
     color: var(--off-white);
     font-family: 'Space Grotesk', sans-serif;
     overflow-x:hidden;
@@ -49,6 +71,40 @@
     outline: 2px solid var(--terracotta);
     outline-offset: 3px;
   }
+
+  /* ---------- Skip link (accesibilidad de teclado) ---------- */
+  .skip-link{
+    position:fixed;
+    top:-60px; left:12px;
+    z-index:10002;
+    background: var(--sand);
+    color: var(--bg);
+    padding:10px 18px;
+    font-size:.85rem;
+    font-weight:500;
+    transition: top .25s ease;
+  }
+  .skip-link:focus{ top:12px; }
+
+  /* ---------- Toast (feedback breve, no intrusivo) ---------- */
+  .toast{
+    position:fixed;
+    left:50%; bottom:28px;
+    transform:translate(-50%,16px);
+    max-width: calc(100vw - 32px);
+    background: var(--sand);
+    color: var(--bg);
+    font-size:.8rem;
+    line-height:1.4;
+    padding:12px 22px;
+    border-radius:999px;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity .35s ease, transform .35s ease;
+    z-index:10001;
+    text-align:center;
+  }
+  .toast.show{ opacity:1; transform:translate(-50%,0); }
 
   /* ---------- Custom cursor (desktop only) ---------- */
   @media (hover:hover) and (pointer:fine){
@@ -138,7 +194,6 @@
     opacity:0;
     transform: translate(var(--tx,0px), 30px) scale(.97);
     transition: opacity .85s cubic-bezier(.16,.8,.24,1), transform .85s cubic-bezier(.16,.8,.24,1);
-    will-change: opacity, transform;
   }
   .reveal.in-view{ opacity:1; transform:none; }
 
@@ -163,34 +218,238 @@
   @keyframes scroll-left{ from{ transform: translateX(0); } to{ transform: translateX(-50%); } }
   @keyframes scroll-right{ from{ transform: translateX(-50%); } to{ transform: translateX(0); } }
 
-  /* ---------- 3D Cylindrical Carousel ---------- */
-  .carousel-stage{
-    perspective: 1900px;
-    perspective-origin: 50% 45%;
+  /* ---------- Values Cube (cubo interactivo que sigue el cursor) ---------- */
+  .cube-bg-glow{
+    position:absolute;
+    top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    width:520px; height:520px;
+    background: radial-gradient(circle, rgba(193,101,46,.16) 0%, transparent 70%);
+    filter: blur(70px);
+    pointer-events:none;
+    z-index:0;
+  }
+  .cube-scene{
+    width:100%;
+    height:340px;
+    margin:56px 0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    perspective:1100px;
     touch-action: pan-y;
   }
-  .carousel-track{
-    transform-style: preserve-3d;
-    position:relative;
-    width:100%;
-    height:100%;
-    cursor: grab;
-  }
-  .carousel-track.grabbing{ cursor: grabbing; }
-  .carousel-card{
-    position:absolute;
-    top:0;
-    backface-visibility: hidden;
-    transform-style: preserve-3d;
-    transition: opacity .5s ease, filter .5s ease;
-    will-change: transform, opacity, filter;
-  }
-  .carousel-card.is-front{ box-shadow: 0 40px 80px -20px rgba(0,0,0,.65); }
-  .card-scroll::-webkit-scrollbar{ width:5px; }
-  .card-scroll::-webkit-scrollbar-thumb{ background: var(--hairline); }
-  .card-scroll{ scrollbar-width: thin; scrollbar-color: var(--hairline) transparent; }
+  @media (min-width:768px){ .cube-scene{ height:420px; } }
 
-  #carousel-progress-bar{ transition: width 6000ms linear; }
+  .cube{
+    position:relative;
+    width:160px;
+    height:160px;
+    transform-style:preserve-3d;
+    transform: rotateX(-18deg) rotateY(-32deg);
+    transition: transform .25s cubic-bezier(.22,.75,.2,1);
+    will-change: transform;
+  }
+  @media (min-width:768px){ .cube{ width:220px; height:220px; } }
+
+  .cube__face{
+    position:absolute;
+    top:0; left:0;
+    width:100%; height:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:1rem;
+    font-family:'Playfair Display', serif;
+    font-size:1.05rem;
+    letter-spacing:.02em;
+    color: var(--off-white);
+    background: linear-gradient(145deg, rgba(193,101,46,0.14), rgba(229,217,197,0.04));
+    border:1px solid var(--hairline);
+    backdrop-filter: blur(2px);
+  }
+  @media (min-width:768px){ .cube__face{ font-size:1.35rem; } }
+
+  .cube__face span{ position:relative; z-index:1; }
+
+  .cube__face--front{ transform: translateZ(80px); }
+  .cube__face--back{ transform: rotateY(180deg) translateZ(80px); }
+  .cube__face--right{ transform: rotateY(90deg) translateZ(80px); }
+  .cube__face--left{ transform: rotateY(-90deg) translateZ(80px); }
+  .cube__face--top{ transform: rotateX(90deg) translateZ(80px); background: linear-gradient(145deg, rgba(193,101,46,0.22), rgba(229,217,197,0.06)); }
+  .cube__face--bottom{ transform: rotateX(-90deg) translateZ(80px); }
+  @media (min-width:768px){
+    .cube__face--front{ transform: translateZ(110px); }
+    .cube__face--back{ transform: rotateY(180deg) translateZ(110px); }
+    .cube__face--right{ transform: rotateY(90deg) translateZ(110px); }
+    .cube__face--left{ transform: rotateY(-90deg) translateZ(110px); }
+    .cube__face--top{ transform: rotateX(90deg) translateZ(110px); background: linear-gradient(145deg, rgba(193,101,46,0.22), rgba(229,217,197,0.06)); }
+    .cube__face--bottom{ transform: rotateX(-90deg) translateZ(110px); }
+  }
+
+  /* ---------- 3D Project Carousel (tarjetas con perspectiva) ---------- */
+  .parallax-bg-wrapper{
+    position:absolute; inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:0;
+    border-radius:inherit;
+  }
+  .parallax-sky{
+    position:absolute;
+    top:-20%; left:-10%;
+    width:120%; height:140%;
+    background:
+      radial-gradient(circle at 50% 30%, rgba(193,101,46,0.18) 0%, rgba(229,217,197,0.03) 40%, transparent 75%),
+      linear-gradient(180deg, rgba(22,21,19,0.8) 0%, rgba(17,17,17,1) 100%);
+    opacity:.5;
+    will-change: transform;
+  }
+  .stage-ambient-glow{
+    position:absolute;
+    top:50%; left:50%;
+    transform: translate(-50%,-50%);
+    width:340px; height:340px;
+    background: radial-gradient(circle, rgba(193,101,46,.35) 0%, transparent 70%);
+    filter: blur(60px);
+    pointer-events:none;
+    z-index:1;
+  }
+  .carousel-svg-line{
+    position:absolute;
+    top:50%; left:0;
+    width:100%; height:100px;
+    transform: translateY(-50%);
+    pointer-events:none;
+    z-index:0;
+    opacity:.2;
+  }
+
+  .carousel-3d-stage{
+    position:relative;
+    z-index:2;
+    width:100%;
+    height:520px;
+    perspective:1200px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    user-select:none;
+    touch-action: pan-y;
+  }
+  @media (max-width: 640px){
+    .carousel-3d-stage{ height:420px; perspective:800px; }
+  }
+
+  .carousel-3d-card{
+    position:absolute;
+    width:310px;
+    height:430px;
+    background: var(--bg-alt);
+    border:1px solid var(--hairline);
+    padding:12px;
+    box-shadow: 0 25px 50px -10px rgba(0,0,0,.85);
+    cursor:pointer;
+    transform-style: preserve-3d;
+    transition: transform .75s cubic-bezier(.34,1.25,.64,1), opacity .65s ease, border-color .4s ease, box-shadow .4s ease;
+    will-change: transform, opacity;
+  }
+  .carousel-3d-card.active-card.hovering{
+    transition: transform .1s linear, border-color .4s ease, box-shadow .4s ease;
+  }
+  @media (max-width: 640px){
+    .carousel-3d-card{ width:240px; height:340px; padding:8px; }
+  }
+  .carousel-3d-card.active-card{
+    border-color: rgba(193,101,46,.8);
+    box-shadow: 0 20px 45px rgba(193,101,46,.28), 0 30px 60px rgba(0,0,0,.9);
+  }
+
+  .carousel-card-inner{
+    width:100%; height:100%;
+    overflow:hidden;
+    position:relative;
+    background:#000;
+  }
+  .carousel-card-inner img{
+    width:100%; height:100%;
+    object-fit:cover;
+    transition: transform .8s cubic-bezier(.2,.8,.2,1);
+  }
+  .carousel-3d-card:hover .carousel-card-inner img{ transform: scale(1.08); }
+
+  .card-info-overlay{
+    position:absolute; inset:0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 20%, rgba(0,0,0,.4) 60%, rgba(0,0,0,.92) 100%);
+    display:flex; flex-direction:column; justify-content:space-between;
+    padding:1.5rem;
+    transform: translateZ(35px);
+  }
+  @media (max-width: 640px){ .card-info-overlay{ padding:1rem; } }
+
+  .category-badge{
+    background: rgba(17,17,17,.75);
+    backdrop-filter: blur(8px);
+    border:1px solid rgba(229,217,197,.2);
+    font-size:10px;
+    letter-spacing:.1em;
+    padding:4px 10px;
+    width:max-content;
+    text-transform:uppercase;
+    color: var(--sand);
+  }
+
+  .carousel-dots{
+    display:flex; align-items:center; justify-content:center;
+    gap:8px;
+    margin-top:1.5rem;
+    position:relative; z-index:10;
+  }
+  .dot{
+    width:8px; height:8px;
+    border-radius:50%;
+    background: rgba(229,217,197,.2);
+    cursor:pointer;
+    transition: all .4s cubic-bezier(.2,.8,.2,1);
+  }
+  .dot.active{
+    width:28px;
+    border-radius:100px;
+    background: var(--terracotta);
+    box-shadow: 0 0 12px rgba(193,101,46,.4);
+  }
+
+  /* ---------- Project modal ---------- */
+  .modal-overlay{
+    position:fixed; inset:0;
+    background: rgba(8,7,6,.88);
+    backdrop-filter: blur(16px);
+    z-index:10000;
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none;
+    transition: opacity .4s ease;
+    padding:1rem;
+  }
+  .modal-overlay.active{ opacity:1; pointer-events:auto; }
+  .modal-container{
+    background: var(--bg-alt);
+    border:1px solid var(--hairline);
+    max-width:920px; width:100%;
+    max-height:88vh; overflow-y:auto;
+    transform: scale(.88) translateY(30px);
+    transition: transform .45s cubic-bezier(.16,1,.3,1);
+    box-shadow: 0 40px 80px rgba(0,0,0,.9);
+  }
+  .modal-overlay.active .modal-container{ transform: scale(1) translateY(0); }
+  .modal-overlay.active .gallery-item{
+    animation: fadeInUp .6s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  @keyframes fadeInUp{
+    from{ opacity:0; transform: translateY(20px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+
 
   .logo-mark{
     font-family:'Syne', sans-serif;
@@ -214,12 +473,12 @@
   .btn-primary{ background: var(--sand); color: var(--bg); transition: background .3s ease; will-change: transform; }
   .btn-primary:hover{ background: var(--off-white); }
 
-  .nav-arrow{ border:1px solid var(--hairline); transition: border-color .3s ease, background .3s ease, transform .2s ease; }
+  .nav-arrow{ position:relative; z-index:30; border:1px solid var(--hairline); transition: border-color .3s ease, background .3s ease, transform .2s ease; }
   .nav-arrow:hover{ border-color: var(--terracotta); background: rgba(193,101,46,0.1); }
   .nav-arrow:active{ transform: scale(.93); }
 
   .tag-pill{ border:1px solid var(--hairline); color: var(--muted); font-size:.72rem; }
-  .grid-photo{ background: var(--bg-alt); border:1px solid var(--hairline); overflow:hidden; }
+  .grid-photo{ background: linear-gradient(135deg, rgba(229,217,197,0.08), rgba(193,101,46,0.05)); border:1px solid rgba(229,217,197,0.16); overflow:hidden; }
   .grid-photo img{ transition: transform .6s cubic-bezier(.16,.8,.24,1); }
   .grid-photo:hover img{ transform: scale(1.08); }
 
@@ -233,8 +492,11 @@
 
 <body class="antialiased">
 
+<a href="#top" class="skip-link">Saltar al contenido</a>
+
 <div class="cursor-dot" id="cursor-dot"></div>
 <div class="cursor-ring" id="cursor-ring"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <!-- ============ NAV ============ -->
 <header class="fixed top-0 left-0 w-full z-50 backdrop-blur-sm bg-[#111111]/80 border-b hairline">
@@ -242,10 +504,11 @@
     <a href="#top" class="font-serif-display text-lg tracking-wide">M. Reyes</a>
     <nav class="hidden md:flex items-center gap-8 text-sm text-[var(--muted)]">
       <a href="#trabajo" class="hover:text-[var(--off-white)] transition-colors">Trabajo</a>
+      <a href="#principios" class="hover:text-[var(--off-white)] transition-colors">Principios</a>
       <a href="#sobre-mi" class="hover:text-[var(--off-white)] transition-colors">Sobre mí</a>
       <a href="#contacto" class="hover:text-[var(--off-white)] transition-colors">Contacto</a>
     </nav>
-    <a href="#" download class="magnetic hidden md:inline-block btn-primary text-sm px-5 py-2.5 font-medium">Descargar CV</a>
+    <a href="#contacto" class="cv-link magnetic hidden md:inline-block btn-primary text-sm px-5 py-2.5 font-medium">Descargar CV</a>
     <button id="menu-btn" class="md:hidden w-9 h-9 flex flex-col justify-center items-center gap-1.5" aria-label="Abrir menú">
       <span class="w-6 h-px bg-[var(--off-white)]"></span>
       <span class="w-6 h-px bg-[var(--off-white)]"></span>
@@ -253,9 +516,10 @@
   </div>
   <div id="mobile-menu" class="hidden md:hidden flex-col px-6 pb-6 gap-4 text-sm border-t hairline">
     <a href="#trabajo" class="py-2">Trabajo</a>
+    <a href="#principios" class="py-2">Principios</a>
     <a href="#sobre-mi" class="py-2">Sobre mí</a>
     <a href="#contacto" class="py-2">Contacto</a>
-    <a href="#" download class="btn-primary text-center px-5 py-2.5 font-medium mt-2">Descargar CV</a>
+    <a href="#contacto" class="cv-link btn-primary text-center px-5 py-2.5 font-medium mt-2">Descargar CV</a>
   </div>
 </header>
 
@@ -272,7 +536,7 @@
         Trece años dirigiendo identidad de marca, campañas y piezas en movimiento para clientes que necesitan verse distintos, no solo verse bien. Branding, Art Direction, Motion Graphics, Visual Identity — construido en Adobe Creative Cloud.
       </p>
       <div class="mt-10 flex flex-wrap items-center gap-4">
-        <a href="#" download class="magnetic btn-primary px-7 py-3.5 text-sm font-medium">Descargar CV</a>
+        <a href="#contacto" class="cv-link magnetic btn-primary px-7 py-3.5 text-sm font-medium">Descargar CV</a>
         <a href="#trabajo" class="text-sm border-b border-[var(--hairline)] pb-1 hover:border-[var(--off-white)] transition-colors">Ver proyectos</a>
       </div>
     </div>
@@ -283,6 +547,7 @@
           <div class="photo-tilt w-full h-full" id="photo-tilt">
             <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1200&auto=format&fit=crop"
                  alt="Retrato profesional del diseñador"
+                 fetchpriority="high" decoding="async"
                  class="w-full h-full object-cover grayscale contrast-110">
           </div>
         </div>
@@ -318,32 +583,32 @@
 
 <!-- ============ MARQUEE (crossed, dos direcciones) ============ -->
 <section class="py-10 md:py-16 overflow-hidden">
-  <div class="marquee-wrap border-y hairline py-6 bg-[var(--bg-alt)]" data-parallax="0.06">
+  <div class="marquee-wrap border-y hairline py-6 bg-[var(--bg-alt)]" data-parallax="0.06" data-base-transform="rotate(-3.5deg) scale(1.05)">
     <div class="marquee-track">
       <div class="flex items-center gap-16 px-8">
-        <span class="logo-mark text-2xl md:text-3xl">ARKA STUDIO</span>
-        <span class="logo-mark text-2xl md:text-3xl">NORDEN &amp; CO</span>
-        <span class="logo-mark text-2xl md:text-3xl">VELAR</span>
-        <span class="logo-mark text-2xl md:text-3xl">MUELLE 9</span>
-        <span class="logo-mark text-2xl md:text-3xl">HALCÓN CAPITAL</span>
-        <span class="logo-mark text-2xl md:text-3xl">TIERRA FIRME</span>
-        <span class="logo-mark text-2xl md:text-3xl">OBRA NEGRA</span>
-        <span class="logo-mark text-2xl md:text-3xl">SILEX</span>
+        <img class="logo-mark h-7 md:h-9 w-auto" src="https://placehold.co/300x80/111111/8A8479.png?text=ARKA+STUDIO&font=montserrat" alt="Logo de ARKA STUDIO" loading="lazy">
+        <img class="logo-mark h-7 md:h-9 w-auto" src="https://placehold.co/300x80/111111/8A8479.png?text=NORDEN+%26+CO&font=montserrat" alt="Logo de NORDEN & CO" loading="lazy">
+        <img class="logo-mark h-7 md:h-9 w-auto" src="https://placehold.co/220x80/111111/8A8479.png?text=VELAR&font=montserrat" alt="Logo de VELAR" loading="lazy">
+        <img class="logo-mark h-7 md:h-9 w-auto" src="https://placehold.co/260x80/111111/8A8479.png?text=MUELLE+9&font=montserrat" alt="Logo de MUELLE 9" loading="lazy">
+        <img class="logo-mark h-7 md:h-9 w-auto" src="https://placehold.co/340x80/111111/8A8479.png?text=HALC%C3%93N+CAPITAL&font=montserrat" alt="Logo de HALCÓN CAPITAL" loading="lazy">
+        <img class="logo-mark h-7 md:h-9 w-auto" src="https://placehold.co/300x80/111111/8A8479.png?text=TIERRA+FIRME&font=montserrat" alt="Logo de TIERRA FIRME" loading="lazy">
+        <img class="logo-mark h-7 md:h-9 w-auto" src="https://placehold.co/280x80/111111/8A8479.png?text=OBRA+NEGRA&font=montserrat" alt="Logo de OBRA NEGRA" loading="lazy">
+        <img class="logo-mark h-7 md:h-9 w-auto" src="https://placehold.co/220x80/111111/8A8479.png?text=SILEX&font=montserrat" alt="Logo de SILEX" loading="lazy">
       </div>
       <div class="flex items-center gap-16 px-8" aria-hidden="true">
-        <span class="logo-mark text-2xl md:text-3xl">ARKA STUDIO</span>
-        <span class="logo-mark text-2xl md:text-3xl">NORDEN &amp; CO</span>
-        <span class="logo-mark text-2xl md:text-3xl">VELAR</span>
-        <span class="logo-mark text-2xl md:text-3xl">MUELLE 9</span>
-        <span class="logo-mark text-2xl md:text-3xl">HALCÓN CAPITAL</span>
-        <span class="logo-mark text-2xl md:text-3xl">TIERRA FIRME</span>
-        <span class="logo-mark text-2xl md:text-3xl">OBRA NEGRA</span>
-        <span class="logo-mark text-2xl md:text-3xl">SILEX</span>
+        <img class="logo-mark h-7 md:h-9 w-auto" src="https://placehold.co/300x80/111111/8A8479.png?text=ARKA+STUDIO&font=montserrat" alt="" loading="lazy">
+        <img class="logo-mark h-7 md:h-9 w-auto" src="https://placehold.co/300x80/111111/8A8479.png?text=NORDEN+%26+CO&font=montserrat" alt="" loading="lazy">
+        <img class="logo-mark h-7 md:h-9 w-auto" src="https://placehold.co/220x80/111111/8A8479.png?text=VELAR&font=montserrat" alt="" loading="lazy">
+        <img class="logo-mark h-7 md:h-9 w-auto" src="https://placehold.co/260x80/111111/8A8479.png?text=MUELLE+9&font=montserrat" alt="" loading="lazy">
+        <img class="logo-mark h-7 md:h-9 w-auto" src="https://placehold.co/340x80/111111/8A8479.png?text=HALC%C3%93N+CAPITAL&font=montserrat" alt="" loading="lazy">
+        <img class="logo-mark h-7 md:h-9 w-auto" src="https://placehold.co/300x80/111111/8A8479.png?text=TIERRA+FIRME&font=montserrat" alt="" loading="lazy">
+        <img class="logo-mark h-7 md:h-9 w-auto" src="https://placehold.co/280x80/111111/8A8479.png?text=OBRA+NEGRA&font=montserrat" alt="" loading="lazy">
+        <img class="logo-mark h-7 md:h-9 w-auto" src="https://placehold.co/220x80/111111/8A8479.png?text=SILEX&font=montserrat" alt="" loading="lazy">
       </div>
     </div>
   </div>
 
-  <div class="marquee-wrap-alt border-y hairline py-4 mt-6 bg-[var(--bg)]" data-parallax="-0.05">
+  <div class="marquee-wrap-alt border-y hairline py-4 mt-6 bg-[var(--bg)]" data-parallax="-0.05" data-base-transform="rotate(3deg) scale(1.05)">
     <div class="marquee-track-alt">
       <div class="flex items-center gap-10 px-8">
         <span class="keyword-mark">Branding</span>
@@ -375,30 +640,90 @@
   </div>
 </section>
 
-<!-- ============ PROJECTS 3D CYLINDRICAL CAROUSEL ============ -->
-<section id="trabajo" class="px-6 md:px-10 max-w-[1400px] mx-auto py-16 md:py-28">
-  <div class="reveal flex items-end justify-between mb-14 md:mb-20 flex-wrap gap-6">
+<!-- ============ PROJECTS 3D CAROUSEL ============ -->
+<section id="trabajo" class="relative px-4 sm:px-8 md:px-10 max-w-[1400px] mx-auto py-16 md:py-28 overflow-hidden rounded-3xl border hairline">
+
+  <div class="parallax-bg-wrapper">
+    <div class="parallax-sky" id="parallax-sky"></div>
+  </div>
+
+  <div class="relative z-10 reveal flex items-end justify-between mb-10 md:mb-12 flex-wrap gap-6">
     <div>
       <p class="text-[var(--terracotta)] text-sm mb-4" data-parallax="0.03">Trabajo seleccionado</p>
       <h2 class="font-serif-display text-4xl md:text-5xl max-w-xl">Branding y motion, lado a lado.</h2>
     </div>
     <div class="flex items-center gap-3">
-      <button id="prev-btn" class="nav-arrow w-12 h-12 flex items-center justify-center" aria-label="Proyecto anterior">
+      <button id="carousel-prev" class="nav-arrow w-12 h-12 rounded-full flex items-center justify-center active:scale-95" aria-label="Proyecto anterior">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
-      <button id="next-btn" class="nav-arrow w-12 h-12 flex items-center justify-center" aria-label="Siguiente proyecto">
+      <button id="carousel-next" class="nav-arrow w-12 h-12 rounded-full flex items-center justify-center active:scale-95" aria-label="Siguiente proyecto">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18l6-6-6-6"/></svg>
       </button>
     </div>
   </div>
 
-  <div class="carousel-stage reveal" id="carousel-stage" tabindex="0" role="region" aria-label="Carrusel 3D de proyectos, usa las flechas del teclado o arrastra para navegar">
-    <div id="carousel-track" class="carousel-track h-[660px] md:h-[760px]"></div>
+  <div class="stage-ambient-glow"></div>
+
+  <svg class="carousel-svg-line" viewBox="0 0 1200 100" fill="none">
+    <path d="M0,50 Q300,10 600,50 T1200,50" stroke="#E5D9C5" stroke-dasharray="6 6" stroke-width="1.5"/>
+  </svg>
+
+  <div class="carousel-3d-stage reveal" id="carousel-stage" tabindex="0" role="region" aria-label="Carrusel 3D de proyectos, usa las flechas o arrastra para navegar"></div>
+
+  <div class="carousel-dots" id="carousel-dots"></div>
+
+  <p class="relative z-10 text-center text-[11px] text-[var(--muted)] mt-6 tracking-widest uppercase">Pasa el cursor sobre la tarjeta principal para ver el giro 3D</p>
+</section>
+
+<!-- ============ PROJECT MODAL ============ -->
+<div class="modal-overlay" id="project-modal" aria-hidden="true">
+  <div class="modal-container p-6 sm:p-10 relative">
+    <button id="modal-close" class="absolute top-5 right-5 flex items-center gap-2 text-xs uppercase tracking-wider text-[var(--muted)] hover:text-[var(--off-white)] bg-[var(--bg)] px-4 py-2 rounded-full border hairline transition-all hover:scale-105 z-20">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Cerrar
+    </button>
+
+    <div class="mt-6">
+      <span id="modal-category" class="category-badge mb-3 inline-block">Categoría</span>
+      <h2 id="modal-title" class="font-serif-display text-3xl sm:text-5xl mt-1 mb-4">Título del proyecto</h2>
+      <p id="modal-description" class="text-[var(--muted)] text-base sm:text-lg leading-relaxed max-w-2xl mb-8"></p>
+      <div id="modal-gallery" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ PRINCIPLES CUBE ============ -->
+<section id="principios" class="relative px-6 md:px-10 max-w-[1400px] mx-auto py-16 md:py-28 border-t hairline">
+  <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+    <div class="cube-bg-glow"></div>
   </div>
 
-  <div id="carousel-dots" class="flex justify-center gap-2.5 mt-10"></div>
-  <div class="w-full max-w-[220px] mx-auto h-[2px] bg-[var(--hairline)] mt-5 overflow-hidden">
-    <div id="carousel-progress-bar" class="h-full bg-[var(--terracotta)]" style="width:0%"></div>
+  <div class="relative z-10 text-center reveal">
+    <p class="text-[var(--terracotta)] text-sm mb-4">Cómo trabajo</p>
+    <h2 class="font-serif-display text-4xl md:text-5xl leading-tight max-w-2xl mx-auto">Seis caras, un mismo criterio.</h2>
+  </div>
+
+  <div class="cube-scene relative z-10" id="cube-scene" role="img" aria-label="Cubo giratorio con seis principios de trabajo: creatividad, puntualidad, compromiso, precisión, estrategia y pasión.">
+    <div class="cube" id="values-cube" aria-hidden="true">
+      <div class="cube__face cube__face--front"><span>Creatividad</span></div>
+      <div class="cube__face cube__face--back"><span>Puntualidad</span></div>
+      <div class="cube__face cube__face--right"><span>Compromiso</span></div>
+      <div class="cube__face cube__face--left"><span>Precisión</span></div>
+      <div class="cube__face cube__face--top"><span>Estrategia</span></div>
+      <div class="cube__face cube__face--bottom"><span>Pasión</span></div>
+    </div>
+  </div>
+
+  <div class="relative z-10 flex flex-col items-center gap-6">
+    <p class="text-[11px] tracking-widest uppercase text-[var(--muted)] flex items-center gap-3">
+      <span class="w-6 h-px bg-[var(--hairline)]"></span>
+      <span class="hidden sm:inline">Mueve el cursor</span>
+      <span class="sm:hidden">Desliza el dedo</span>
+      <span class="w-6 h-px bg-[var(--hairline)]"></span>
+    </p>
+    <p class="text-center text-[var(--muted)] text-base md:text-lg max-w-xl leading-relaxed">
+      Cada proyecto pasa por los mismos seis principios, sin importar el tamaño del cliente o el plazo de entrega.
+    </p>
   </div>
 </section>
 
@@ -475,6 +800,27 @@ const isFinePointer = window.matchMedia('(hover:hover) and (pointer:fine)').matc
 
 /* ================= YEAR ================= */
 document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ================= TOAST ================= */
+const toastEl = document.getElementById('toast');
+let toastTimer = null;
+function showToast(message, ms = 3400){
+  if (!toastEl) return;
+  toastEl.textContent = message;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), ms);
+}
+
+/* ================= CV LINKS =================
+   No hay un PDF de CV enlazado todavía: en vez de dejar un enlace roto
+   ("#" con download, que puede intentar descargar la propia página),
+   los botones llevan honestamente al bloque de contacto y lo avisan. */
+document.querySelectorAll('.cv-link').forEach(a => {
+  a.addEventListener('click', () => {
+    showToast('Aún no hay un PDF enlazado — escríbeme aquí abajo y te envío el CV por correo.');
+  });
+});
 
 /* ================= MOBILE MENU ================= */
 const menuBtn = document.getElementById('menu-btn');
@@ -618,6 +964,88 @@ window.addEventListener('scroll', () => {
   lastY = y;
 }, { passive: true });
 
+/* ================= VALUES CUBE (rotación con el cursor) =================
+   El cubo sigue la posición del cursor en TODA la ventana mientras la
+   sección esté visible — no solo cuando el mouse está exactamente encima
+   de su caja de ~300px, que era muy fácil de perder y hacía parecer que
+   el cubo "no giraba". En touch, se arrastra directamente sobre el cubo. */
+(function(){
+  const section = document.getElementById('principios');
+  const scene = document.getElementById('cube-scene');
+  const cube = document.getElementById('values-cube');
+  if (!section || !scene || !cube) return;
+
+  const BASE_RX = -18, BASE_RY = -32;
+  const MAX_DEG = 60;
+  let targetRX = BASE_RX, targetRY = BASE_RY;
+  let currentRX = BASE_RX, currentRY = BASE_RY;
+  let idleAngle = 0;
+  let mouseX = null, mouseY = null;
+  let sectionVisible = false;
+  let touchActive = false;
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+  const ring = document.getElementById('cursor-ring');
+  const canHoverCursor = isFinePointer && !prefersReducedMotion && ring;
+
+  function rotateFromPoint(clientX, clientY){
+    const rect = scene.getBoundingClientRect();
+    const px = ((clientX - rect.left) / rect.width) - 0.5;
+    const py = ((clientY - rect.top) / rect.height) - 0.5;
+    targetRY = clamp(px * MAX_DEG * 1.3, -MAX_DEG, MAX_DEG);
+    targetRX = clamp(-py * MAX_DEG * 1.3, -MAX_DEG, MAX_DEG);
+  }
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  }, { passive:true });
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { sectionVisible = entry.isIntersecting; });
+  }, { threshold: 0.1 });
+  sectionObserver.observe(section);
+
+  /* Touch: arrastre directo sobre el cubo (no hay "cursor" que seguir de fondo) */
+  scene.addEventListener('touchstart', (e) => {
+    touchActive = true;
+    if (e.touches[0]) rotateFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive:true });
+  scene.addEventListener('touchmove', (e) => {
+    if (!e.touches[0]) return;
+    rotateFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+  }, { passive:true });
+  scene.addEventListener('touchend', () => { touchActive = false; });
+
+  function tick(){
+    if (touchActive){
+      // el transform ya lo actualiza rotateFromPoint() en touchmove
+    } else if (sectionVisible && mouseX !== null && !prefersReducedMotion){
+      rotateFromPoint(mouseX, mouseY);
+      if (canHoverCursor){
+        const rect = scene.getBoundingClientRect();
+        const overCube = mouseX >= rect.left && mouseX <= rect.right && mouseY >= rect.top && mouseY <= rect.bottom;
+        ring.classList.toggle('cursor-hover', overCube);
+      }
+    } else if (!prefersReducedMotion){
+      idleAngle += 0.12;
+      targetRX = BASE_RX;
+      targetRY = BASE_RY + Math.sin(idleAngle * Math.PI / 180) * 14;
+    }
+    currentRX += (targetRX - currentRX) * 0.08;
+    currentRY += (targetRY - currentRY) * 0.08;
+    cube.style.transform = `rotateX(${currentRX}deg) rotateY(${currentRY}deg)`;
+    requestAnimationFrame(tick);
+  }
+
+  if (prefersReducedMotion){
+    cube.style.transform = `rotateX(${BASE_RX}deg) rotateY(${BASE_RY}deg)`;
+  } else {
+    tick();
+  }
+})();
+
 /* ================= SCROLL REVEAL (staggered, directional) ================= */
 const revealEls = document.querySelectorAll('.reveal');
 let revealCount = 0;
@@ -629,7 +1057,10 @@ const revealObserver = new IntersectionObserver((entries) => {
         const dir = (revealCount % 2 === 0 ? 1 : -1) * scrollDir;
         el.style.setProperty('--tx', `${dir * 26}px`);
       }
+      // promote to a GPU layer only for the duration of the transition, then drop it
+      el.style.willChange = 'opacity, transform';
       el.classList.add('in-view');
+      el.addEventListener('transitionend', () => { el.style.willChange = 'auto'; }, { once: true });
       revealCount++;
       revealObserver.unobserve(el);
     }
@@ -655,11 +1086,17 @@ document.querySelectorAll('.reveal-stagger:not(.in-view)').forEach(el => stagger
 const parallaxEls = Array.from(document.querySelectorAll('[data-parallax]'));
 let parallaxTicking = false;
 function updateParallax(){
+  const viewportH = window.innerHeight;
   parallaxEls.forEach(el => {
-    const speed = parseFloat(el.dataset.parallax);
     const rect = el.getBoundingClientRect();
-    const centerOffset = rect.top + rect.height / 2 - window.innerHeight / 2;
-    el.style.transform = `translate3d(0, ${(-centerOffset * speed).toFixed(2)}px, 0)`;
+    // skip elements nowhere near the viewport — no point writing a transform nobody sees
+    if (rect.bottom < -viewportH || rect.top > viewportH * 2) return;
+    const speed = parseFloat(el.dataset.parallax);
+    const centerOffset = rect.top + rect.height / 2 - viewportH / 2;
+    // preserva la rotación/escala base (marquees cruzados) antes de aplicar el desplazamiento de paralaje,
+    // ya que un transform inline reemplaza por completo cualquier transform definido por clase CSS.
+    const base = el.dataset.baseTransform ? el.dataset.baseTransform + ' ' : '';
+    el.style.transform = `${base}translate3d(0, ${(-centerOffset * speed).toFixed(2)}px, 0)`;
   });
   parallaxTicking = false;
 }
@@ -702,334 +1139,335 @@ statEls.forEach(el => statObserver.observe(el));
 const projects = [
   {
     client: 'ARKA STUDIO', title: 'Sistema de identidad para estudio de arquitectura', category: 'Branding',
-    cover: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=1400&auto=format&fit=crop',
-    grid: [
-      'https://images.unsplash.com/photo-1634942536790-6a5cb04eee16?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1616628188859-7a11abb6fcc9?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1600861195091-690c92f1d2cd?q=80&w=800&auto=format&fit=crop'
-    ],
-    social: [
-      'https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=700&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1611162616475-46b635cb6868?q=80&w=700&auto=format&fit=crop'
-    ]
+    cover: 'https://picsum.photos/seed/arka-studio-cover/900/1100',
+    media: ['https://picsum.photos/seed/arka-studio-cover/900/1100', 'https://picsum.photos/seed/arka-studio-grid1/500/500', 'https://picsum.photos/seed/arka-studio-grid2/500/500']
   },
   {
     client: 'NORDEN & CO', title: 'Campaña de lanzamiento — colección otoño', category: 'Campaña',
-    cover: 'https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=1400&auto=format&fit=crop',
-    grid: [
-      'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800&auto=format&fit=crop'
-    ],
-    social: [
-      'https://images.unsplash.com/photo-1512418490979-92798cec1380?q=80&w=700&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=700&auto=format&fit=crop'
-    ]
+    cover: 'https://picsum.photos/seed/norden-co-cover/900/1100',
+    media: ['https://picsum.photos/seed/norden-co-cover/900/1100', 'https://picsum.photos/seed/norden-co-grid1/500/500', 'https://picsum.photos/seed/norden-co-grid2/500/500']
   },
   {
     client: 'VELAR', title: 'Motion identity para app financiera', category: 'Motion',
-    cover: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1400&auto=format&fit=crop',
-    grid: [
-      'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=800&auto=format&fit=crop'
-    ],
-    social: [
-      'https://images.unsplash.com/photo-1620121692029-d088224ddc74?q=80&w=700&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1618172193622-ae2d025f4032?q=80&w=700&auto=format&fit=crop'
-    ]
+    cover: 'https://picsum.photos/seed/velar-cover/900/1100',
+    media: ['https://picsum.photos/seed/velar-cover/900/1100', 'https://picsum.photos/seed/velar-grid1/500/500', 'https://picsum.photos/seed/velar-grid2/500/500']
   },
   {
     client: 'MUELLE 9', title: 'Identidad visual para marca de café de especialidad', category: 'Branding',
-    cover: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=1400&auto=format&fit=crop',
-    grid: [
-      'https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1442512595331-e89e73853f31?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800&auto=format&fit=crop'
-    ],
-    social: [
-      'https://images.unsplash.com/photo-1461988320302-91bde64fc8e4?q=80&w=700&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1495521821757-a1efb6729352?q=80&w=700&auto=format&fit=crop'
-    ]
+    cover: 'https://picsum.photos/seed/muelle-9-cover/900/1100',
+    media: ['https://picsum.photos/seed/muelle-9-cover/900/1100', 'https://picsum.photos/seed/muelle-9-grid1/500/500', 'https://picsum.photos/seed/muelle-9-grid2/500/500']
   },
   {
     client: 'HALCÓN CAPITAL', title: 'Comunicación visual para reporte anual', category: 'Comunicación Visual',
-    cover: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1400&auto=format&fit=crop',
-    grid: [
-      'https://images.unsplash.com/photo-1553877522-43269d4ea984?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1543286386-713bdd548da4?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1568992687947-868a62a9f521?q=80&w=800&auto=format&fit=crop'
-    ],
-    social: [
-      'https://images.unsplash.com/photo-1585858229735-cd08d8cbc7db?q=80&w=700&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1587614382346-4ec70e388b28?q=80&w=700&auto=format&fit=crop'
-    ]
+    cover: 'https://picsum.photos/seed/halcon-capital-cover/900/1100',
+    media: ['https://picsum.photos/seed/halcon-capital-cover/900/1100', 'https://picsum.photos/seed/halcon-capital-grid1/500/500', 'https://picsum.photos/seed/halcon-capital-grid2/500/500']
+  },
+  {
+    client: 'TIERRA FIRME', title: 'Sistema de empaque para línea de productos orgánicos', category: 'Empaque',
+    cover: 'https://picsum.photos/seed/tierra-firme-cover/900/1100',
+    media: ['https://picsum.photos/seed/tierra-firme-cover/900/1100', 'https://picsum.photos/seed/tierra-firme-grid1/500/500', 'https://picsum.photos/seed/tierra-firme-grid2/500/500']
+  },
+  {
+    client: 'LUNA & SOL', title: 'Identidad de marca para estudio de cerámica artesanal', category: 'Branding',
+    cover: 'https://picsum.photos/seed/luna-sol-cover/900/1100',
+    media: ['https://picsum.photos/seed/luna-sol-cover/900/1100', 'https://picsum.photos/seed/luna-sol-grid1/500/500', 'https://picsum.photos/seed/luna-sol-grid2/500/500']
+  },
+  {
+    client: 'AURORA RETAIL', title: 'Campaña integral de temporada — colección primavera', category: 'Campaña',
+    cover: 'https://picsum.photos/seed/aurora-retail-cover/900/1100',
+    media: ['https://picsum.photos/seed/aurora-retail-cover/900/1100', 'https://picsum.photos/seed/aurora-retail-grid1/500/500', 'https://picsum.photos/seed/aurora-retail-grid2/500/500']
+  },
+  {
+    client: 'KIVA BEAUTY', title: 'Campaña de expansión de marca — línea skincare', category: 'Campaña',
+    cover: 'https://picsum.photos/seed/kiva-beauty-cover/900/1100',
+    media: ['https://picsum.photos/seed/kiva-beauty-cover/900/1100', 'https://picsum.photos/seed/kiva-beauty-grid1/500/500', 'https://picsum.photos/seed/kiva-beauty-grid2/500/500']
+  },
+  {
+    client: 'ÓRBITA LABS', title: 'Sistema de motion graphics para producto SaaS', category: 'Motion',
+    cover: 'https://picsum.photos/seed/orbita-labs-cover/900/1100',
+    media: ['https://picsum.photos/seed/orbita-labs-cover/900/1100', 'https://picsum.photos/seed/orbita-labs-grid1/500/500', 'https://picsum.photos/seed/orbita-labs-grid2/500/500']
+  },
+  {
+    client: 'NIMBUS PAY', title: 'Identidad animada para fintech — onboarding de app', category: 'Motion',
+    cover: 'https://picsum.photos/seed/nimbus-pay-cover/900/1100',
+    media: ['https://picsum.photos/seed/nimbus-pay-cover/900/1100', 'https://picsum.photos/seed/nimbus-pay-grid1/500/500', 'https://picsum.photos/seed/nimbus-pay-grid2/500/500']
+  },
+  {
+    client: 'GRUPO SIERRA', title: 'Comunicación visual para memoria de sostenibilidad', category: 'Comunicación Visual',
+    cover: 'https://picsum.photos/seed/grupo-sierra-cover/900/1100',
+    media: ['https://picsum.photos/seed/grupo-sierra-cover/900/1100', 'https://picsum.photos/seed/grupo-sierra-grid1/500/500', 'https://picsum.photos/seed/grupo-sierra-grid2/500/500']
+  },
+  {
+    client: 'PORTAL EDUCA', title: 'Sistema editorial para reporte de impacto anual', category: 'Comunicación Visual',
+    cover: 'https://picsum.photos/seed/portal-educa-cover/900/1100',
+    media: ['https://picsum.photos/seed/portal-educa-cover/900/1100', 'https://picsum.photos/seed/portal-educa-grid1/500/500', 'https://picsum.photos/seed/portal-educa-grid2/500/500']
+  },
+  {
+    client: 'RAÍZ NATURAL', title: 'Sistema de empaque para línea de té artesanal', category: 'Empaque',
+    cover: 'https://picsum.photos/seed/raiz-natural-cover/900/1100',
+    media: ['https://picsum.photos/seed/raiz-natural-cover/900/1100', 'https://picsum.photos/seed/raiz-natural-grid1/500/500', 'https://picsum.photos/seed/raiz-natural-grid2/500/500']
+  },
+  {
+    client: 'CACAO NEGRO', title: 'Empaque premium para chocolatería de autor', category: 'Empaque',
+    cover: 'https://picsum.photos/seed/cacao-negro-cover/900/1100',
+    media: ['https://picsum.photos/seed/cacao-negro-cover/900/1100', 'https://picsum.photos/seed/cacao-negro-grid1/500/500', 'https://picsum.photos/seed/cacao-negro-grid2/500/500']
   }
 ];
 
-/* ================= 3D CYLINDRICAL CAROUSEL ENGINE ================= */
-const track = document.getElementById('carousel-track');
+/* ================= 3D PROJECT CAROUSEL ================= */
+let currentIndex = 0;
 const stage = document.getElementById('carousel-stage');
-const dotsWrap = document.getElementById('carousel-dots');
-const total = projects.length;
-const cardAngle = 360 / total;
+const dotsContainer = document.getElementById('carousel-dots');
+let cardElements = [];
 
-let radius = 0;
-let cardWidthPx = 0;
-let activeIndex = 0;
-let currentRotation = 0;   // smoothed, rendered every frame
-let targetRotation = 0;    // where we want to end up
-let dragging = false;
-let dragPending = false;
-let dragStartX = 0;
-let dragStartY = 0;
-let dragStartRotation = 0;
-let lastDragX = 0;
-let dragVelocity = 0;
-let lastDragTime = 0;
-
-function buildCard(project, i){
-  const card = document.createElement('article');
-  card.className = 'carousel-card';
-  card.dataset.index = i;
-  card.innerHTML = `
-    <div class="w-full h-full bg-[var(--bg-alt)] border hairline overflow-y-auto card-scroll">
-      <div class="grid md:grid-cols-2 h-full">
-        <div class="relative h-52 md:h-full">
-          <img src="${project.cover}" alt="Pieza principal de ${project.title}" class="w-full h-full object-cover grayscale-[15%]" draggable="false">
-          <div class="absolute top-0 left-0 p-5 md:p-7 flex items-center justify-between w-full">
-            <span class="logo-mark text-base md:text-lg text-[var(--off-white)] opacity-100">${project.client}</span>
-            <span class="tag-pill px-3 py-1 bg-[var(--bg)]/80">${project.category}</span>
-          </div>
-        </div>
-        <div class="p-6 md:p-7 flex flex-col">
-          <h3 class="font-serif-display text-2xl md:text-[1.7rem] leading-snug mb-5">${project.title}</h3>
-
-          <p class="text-xs text-[var(--muted)] mb-2">Aplicaciones de marca</p>
-          <div class="grid grid-cols-3 gap-2 mb-5">
-            ${project.grid.map(src => `<div class="grid-photo aspect-square"><img src="${src}" alt="Aplicación de marca — ${project.client}" class="w-full h-full object-cover" draggable="false"></div>`).join('')}
-          </div>
-
-          <p class="text-xs text-[var(--muted)] mb-2">Pieza en movimiento</p>
-          <div class="relative aspect-video bg-[var(--bg)] border hairline mb-5 flex items-center justify-center group cursor-pointer">
-            <img src="${project.grid[0]}" alt="Miniatura de video de motion — ${project.client}" class="w-full h-full object-cover opacity-40" draggable="false">
-            <div class="absolute w-14 h-14 rounded-full border border-[var(--sand)] flex items-center justify-center group-hover:scale-110 transition-transform">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--sand)"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-          </div>
-
-          <p class="text-xs text-[var(--muted)] mb-2">Campaña &amp; redes</p>
-          <div class="grid grid-cols-2 gap-2">
-            ${project.social.map(src => `<div class="grid-photo aspect-[4/3]"><img src="${src}" alt="Pieza de campaña — ${project.client}" class="w-full h-full object-cover" draggable="false"></div>`).join('')}
+function initCarouselNodes(){
+  stage.innerHTML = '';
+  cardElements = projects.map((proj, idx) => {
+    const card = document.createElement('div');
+    card.className = 'carousel-3d-card';
+    card.innerHTML = `
+      <div class="carousel-card-inner">
+        <img src="${proj.cover}" alt="${proj.client} — ${proj.title}" loading="lazy">
+        <div class="card-info-overlay">
+          <span class="category-badge">${proj.category}</span>
+          <div>
+            <h3 class="font-serif-display text-lg sm:text-xl text-white font-medium leading-snug">${proj.client}</h3>
+            <p class="explore-btn text-[11px] text-[var(--sand)] opacity-90 mt-1 hidden">Explorar proyecto →</p>
           </div>
         </div>
       </div>
-    </div>
-  `;
-  return card;
+    `;
+
+    /* Requirement: tilt 3D interactivo con mousemove, exclusivo sobre la tarjeta activa.
+       Se usa isFinePointer (hover:hover + pointer:fine) en lugar del ancho de
+       ventana para decidir si hay mouse real disponible: un panel de vista previa
+       angosto (<640px) con mouse SÍ debe recibir el tilt; un touch en pantalla
+       ancha NO debe recibirlo. */
+    card.addEventListener('mousemove', (e) => {
+      if (!card.classList.contains('active-card') || !isFinePointer || prefersReducedMotion) return;
+      card.classList.add('hovering');
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      const rotateXCalculated = -y / 10;
+      const rotateYCalculated = x / 10;
+      card.style.transform = `translateX(0px) translateZ(30px) rotateX(${rotateXCalculated}deg) rotateY(${rotateYCalculated}deg) scale(1.04)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+      if (!card.classList.contains('active-card')) return;
+      card.classList.remove('hovering');
+      card.style.transform = `translateX(0px) translateZ(0px) rotateX(0deg) rotateY(0deg) scale(1)`;
+    });
+
+    card.addEventListener('click', () => {
+      if (card.classList.contains('active-card')) {
+        openModal(proj);
+      } else {
+        currentIndex = idx;
+        updateCarouselPositions();
+        restartAutoplay();
+      }
+    });
+
+    stage.appendChild(card);
+    return card;
+  });
+
+  createDots();
+  updateCarouselPositions();
 }
 
-projects.forEach((p, i) => track.appendChild(buildCard(p, i)));
-
-projects.forEach((_, i) => {
-  const dot = document.createElement('button');
-  dot.className = 'w-2 h-2 rounded-full bg-[var(--hairline)] transition-colors';
-  dot.setAttribute('aria-label', `Ir al proyecto ${i + 1}`);
-  dot.addEventListener('click', () => { goTo(i); restartAutoplay(); });
-  dotsWrap.appendChild(dot);
-});
-
-function sizeCylinder(){
-  const stageRect = stage.getBoundingClientRect();
-  const isMobile = window.innerWidth < 768;
-  const widthRatio = isMobile ? 0.92 : 0.8;
-  cardWidthPx = stageRect.width * widthRatio;
-  // radius so that adjacent cards just clear each other around the ring
-  radius = Math.round((cardWidthPx / 2) / Math.tan(Math.PI / total) * 1.02);
-
-  const cards = track.querySelectorAll('.carousel-card');
-  cards.forEach(card => {
-    card.style.width = cardWidthPx + 'px';
-    card.style.height = '100%';
-    card.style.left = ((stageRect.width - cardWidthPx) / 2) + 'px';
+function createDots(){
+  dotsContainer.innerHTML = '';
+  projects.forEach((_, idx) => {
+    const dot = document.createElement('div');
+    dot.className = `dot ${idx === currentIndex ? 'active' : ''}`;
+    dot.addEventListener('click', () => {
+      currentIndex = idx;
+      updateCarouselPositions();
+      restartAutoplay();
+    });
+    dotsContainer.appendChild(dot);
   });
 }
 
-function normalizeAngleDiff(diff){
-  diff = diff % 360;
-  if (diff > 180) diff -= 360;
-  if (diff < -180) diff += 360;
-  return diff;
-}
+/* Requirement: transición y desplazamiento espacial 3D entre tarjetas (cubic-bezier via CSS transition) */
+function updateCarouselPositions(){
+  const total = projects.length;
+  const isMobile = window.innerWidth < 640;
+  const spacing = isMobile ? 130 : 220;
 
-function renderCylinder(){
-  const cards = track.querySelectorAll('.carousel-card');
-  track.style.transform = `translateZ(${-radius}px) rotateY(${currentRotation}deg)`;
+  cardElements.forEach((card, idx) => {
+    let offset = idx - currentIndex;
+    if (offset > total / 2) offset -= total;
+    if (offset < -total / 2) offset += total;
 
-  let frontIndex = 0;
-  let frontDiff = 999;
+    const absOffset = Math.abs(offset);
+    const isActive = offset === 0;
 
-  cards.forEach((card, i) => {
-    const cardBaseAngle = i * cardAngle;
-    const diff = normalizeAngleDiff(cardBaseAngle - currentRotation);
-    const absDiff = Math.abs(diff);
-    const t = Math.min(absDiff / 130, 1); // 0 = front-facing, 1 = far side
+    card.classList.remove('hovering');
 
-    const opacity = Math.max(1 - t * 1.05, 0);
-    const blur = (t * 7).toFixed(2);
-    const brightness = (1 - t * 0.55).toFixed(2);
-    const scale = (1 - t * 0.22).toFixed(3);
-
-    card.style.transform = `rotateY(${cardBaseAngle}deg) translateZ(${radius}px) scale(${scale})`;
-    card.style.opacity = opacity.toFixed(2);
-    card.style.filter = `brightness(${brightness}) blur(${blur}px)`;
-    card.style.pointerEvents = absDiff < cardAngle / 2 ? 'auto' : 'none';
-    card.classList.toggle('is-front', absDiff < cardAngle / 2);
-
-    if (absDiff < frontDiff){ frontDiff = absDiff; frontIndex = i; }
-  });
-
-  if (frontIndex !== activeIndex && !dragging){
-    activeIndex = frontIndex;
-    updateDots();
-  }
-}
-
-function updateDots(){
-  const dots = dotsWrap.querySelectorAll('button');
-  dots.forEach((dot, i) => {
-    dot.style.backgroundColor = i === activeIndex ? 'var(--terracotta)' : 'var(--hairline)';
-    dot.style.width = i === activeIndex ? '22px' : '8px';
-    dot.style.borderRadius = '4px';
-  });
-}
-
-/* Inertial render loop: lerps currentRotation toward targetRotation every frame */
-function animationLoop(){
-  const ease = dragging ? 1 : 0.1;
-  currentRotation += (targetRotation - currentRotation) * ease;
-  renderCylinder();
-  requestAnimationFrame(animationLoop);
-}
-
-function goTo(index){
-  activeIndex = ((index % total) + total) % total;
-  targetRotation = activeIndex * cardAngle;
-  updateDots();
-}
-
-document.getElementById('next-btn').addEventListener('click', () => { goTo(activeIndex + 1); restartAutoplay(); });
-document.getElementById('prev-btn').addEventListener('click', () => { goTo(activeIndex - 1); restartAutoplay(); });
-
-stage.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowRight'){ goTo(activeIndex + 1); restartAutoplay(); }
-  if (e.key === 'ArrowLeft'){ goTo(activeIndex - 1); restartAutoplay(); }
-});
-
-/* ---------- Drag / swipe (mouse + touch, unified via Pointer Events) ---------- */
-track.addEventListener('pointerdown', (e) => {
-  // don't start a horizontal drag from inside a scrollable card body —
-  // wait to see if the gesture is horizontal before capturing the pointer
-  dragPending = true;
-  dragging = false;
-  dragStartX = e.clientX;
-  dragStartY = e.clientY;
-  lastDragX = e.clientX;
-  dragStartRotation = currentRotation;
-  dragVelocity = 0;
-  lastDragTime = performance.now();
-});
-
-track.addEventListener('pointermove', (e) => {
-  if (!dragPending && !dragging) return;
-
-  if (dragPending && !dragging){
-    const dx = e.clientX - dragStartX;
-    const dy = e.clientY - dragStartY;
-    if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return; // not enough movement yet
-    if (Math.abs(dy) > Math.abs(dx)){
-      // vertical intent — let the card's internal scroll handle it
-      dragPending = false;
-      return;
+    if (isActive){
+      card.classList.add('active-card');
+      card.querySelector('.explore-btn')?.classList.remove('hidden');
+    } else {
+      card.classList.remove('active-card');
+      card.querySelector('.explore-btn')?.classList.add('hidden');
     }
-    // horizontal intent confirmed — begin the carousel drag
-    dragging = true;
-    track.classList.add('grabbing');
-    document.getElementById('cursor-ring')?.classList.add('cursor-drag');
-    pauseAutoplay();
-    track.setPointerCapture(e.pointerId);
-  }
 
-  if (!dragging) return;
-  const now = performance.now();
-  const dt = Math.max(now - lastDragTime, 1);
-  const dx = e.clientX - dragStartX;
-  const stepDx = e.clientX - lastDragX;
-  const sensitivity = 0.28; // degrees per pixel
-  targetRotation = dragStartRotation - dx * sensitivity;
-  currentRotation = targetRotation;
-  dragVelocity = (-stepDx * sensitivity) / dt * 16; // deg per ~frame
-  lastDragX = e.clientX;
-  lastDragTime = now;
+    const translateX = offset * spacing;
+    const translateZ = -absOffset * (isMobile ? 150 : 200);
+    const rotateY = offset * (isMobile ? -28 : -32);
+    const scale = Math.max(1 - absOffset * 0.18, 0.5);
+    const opacity = absOffset > 2 ? 0 : Math.max(1 - absOffset * 0.38, 0);
+
+    card.style.transform = `translateX(${translateX}px) translateZ(${translateZ}px) rotateY(${rotateY}deg) scale(${scale})`;
+    card.style.opacity = opacity;
+    card.style.zIndex = 100 - absOffset;
+    card.style.pointerEvents = opacity === 0 ? 'none' : 'auto';
+  });
+
+  const dots = dotsContainer.querySelectorAll('.dot');
+  dots.forEach((dot, idx) => { dot.className = `dot ${idx === currentIndex ? 'active' : ''}`; });
+}
+
+document.getElementById('carousel-next').addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % projects.length;
+  updateCarouselPositions();
+  restartAutoplay();
+});
+document.getElementById('carousel-prev').addEventListener('click', () => {
+  currentIndex = (currentIndex - 1 + projects.length) % projects.length;
+  updateCarouselPositions();
+  restartAutoplay();
 });
 
-function endDrag(e){
-  dragPending = false;
-  if (!dragging) return;
-  dragging = false;
-  track.classList.remove('grabbing');
-  document.getElementById('cursor-ring')?.classList.remove('cursor-drag');
+/* Gestos táctiles (swipe) */
+let touchStartX = 0;
+stage.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+stage.addEventListener('touchend', (e) => {
+  const touchEndX = e.changedTouches[0].screenX;
+  if (touchEndX < touchStartX - 40){
+    currentIndex = (currentIndex + 1) % projects.length;
+    updateCarouselPositions();
+    restartAutoplay();
+  } else if (touchEndX > touchStartX + 40){
+    currentIndex = (currentIndex - 1 + projects.length) % projects.length;
+    updateCarouselPositions();
+    restartAutoplay();
+  }
+}, { passive: true });
 
-  // apply a touch of momentum before snapping to the nearest card
-  const momentum = Math.max(Math.min(dragVelocity * 3, cardAngle * 1.5), -cardAngle * 1.5);
-  const projected = currentRotation + momentum;
-  const nearestIndex = Math.round(projected / cardAngle);
-  goTo(nearestIndex);
-  restartAutoplay();
+/* Navegación por teclado cuando el carrusel tiene foco */
+stage.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowLeft'){
+    e.preventDefault();
+    currentIndex = (currentIndex - 1 + projects.length) % projects.length;
+    updateCarouselPositions();
+    restartAutoplay();
+  }
+  if (e.key === 'ArrowRight'){
+    e.preventDefault();
+    currentIndex = (currentIndex + 1) % projects.length;
+    updateCarouselPositions();
+    restartAutoplay();
+  }
+  if (e.key === 'Enter' || e.key === ' '){
+    e.preventDefault();
+    openModal(projects[currentIndex]);
+  }
+});
+
+let carouselResizeTimer = null;
+window.addEventListener('resize', () => { clearTimeout(carouselResizeTimer); carouselResizeTimer = setTimeout(updateCarouselPositions, 120); });
+
+/* ================= PROJECT MODAL (detalles del proyecto) =================
+   NOTA: este bloque se declara ANTES del motor de autoplay a propósito.
+   startAutoplay() llama a isModalOpen(), que depende de la constante
+   `modal`; si `modal` se declarara más abajo en el mismo <script>,
+   cualquier llamada síncrona a startAutoplay() ocurrida antes de esa
+   línea lanzaría un ReferenceError (temporal dead zone) y detendría
+   la ejecución de TODO el script restante (incluido el propio modal
+   y el listener de Escape). Por eso el orden aquí es crítico. */
+const modal = document.getElementById('project-modal');
+const modalTitle = document.getElementById('modal-title');
+const modalCategory = document.getElementById('modal-category');
+const modalDescription = document.getElementById('modal-description');
+const modalGallery = document.getElementById('modal-gallery');
+let wasAutoplayingBeforeModal = false;
+
+function isModalOpen(){ return modal.classList.contains('active'); }
+
+function openModal(project){
+  modalTitle.textContent = project.client;
+  modalCategory.textContent = project.category;
+  modalDescription.textContent = project.title;
+
+  modalGallery.innerHTML = '';
+  project.media.forEach((url, index) => {
+    const container = document.createElement('div');
+    container.className = 'gallery-item rounded-2xl overflow-hidden border hairline bg-black aspect-video opacity-0';
+    container.style.animationDelay = `${index * 0.12}s`;
+    container.innerHTML = `<img src="${url}" alt="${project.client}" class="w-full h-full object-cover">`;
+    modalGallery.appendChild(container);
+  });
+
+  wasAutoplayingBeforeModal = !!autoplayTimer;
+  pauseAutoplay();
+  modal.classList.add('active');
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
 }
-track.addEventListener('pointerup', endDrag);
-track.addEventListener('pointercancel', endDrag);
-track.addEventListener('pointerleave', (e) => { if (dragging && e.buttons === 0) endDrag(e); });
 
-/* ================= CAROUSEL AUTOPLAY + PROGRESS ================= */
+function closeModal(){
+  modal.classList.remove('active');
+  modal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  if (wasAutoplayingBeforeModal) startAutoplay();
+}
+
+document.getElementById('modal-close').addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isModalOpen()) closeModal(); });
+
+initCarouselNodes();
+
+/* ================= CAROUSEL AUTOPLAY ================= */
 const AUTOPLAY_MS = 6000;
-const progressBar = document.getElementById('carousel-progress-bar');
 let autoplayTimer = null;
-
-function runProgressBar(){
-  progressBar.style.transition = 'none';
-  progressBar.style.width = '0%';
-  void progressBar.offsetWidth;
-  progressBar.style.transition = `width ${AUTOPLAY_MS}ms linear`;
-  progressBar.style.width = '100%';
-}
+let carouselInViewport = true;
 
 function startAutoplay(){
-  if (prefersReducedMotion) return;
+  if (prefersReducedMotion || !carouselInViewport || isModalOpen()) return;
   clearInterval(autoplayTimer);
-  runProgressBar();
   autoplayTimer = setInterval(() => {
-    goTo(activeIndex + 1);
-    runProgressBar();
+    currentIndex = (currentIndex + 1) % projects.length;
+    updateCarouselPositions();
   }, AUTOPLAY_MS);
 }
-
 function restartAutoplay(){ startAutoplay(); }
-
-function pauseAutoplay(){
-  clearInterval(autoplayTimer);
-  progressBar.style.transition = 'none';
-}
+function pauseAutoplay(){ clearInterval(autoplayTimer); }
 
 stage.addEventListener('mouseenter', pauseAutoplay);
-stage.addEventListener('mouseleave', () => { if (!dragging) startAutoplay(); });
+stage.addEventListener('mouseleave', () => { if (!isModalOpen()) startAutoplay(); });
 
-sizeCylinder();
-renderCylinder();
-updateDots();
-window.addEventListener('resize', sizeCylinder);
-requestAnimationFrame(animationLoop);
+const carouselVisibilityObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    carouselInViewport = entry.isIntersecting;
+    if (carouselInViewport) startAutoplay();
+    else pauseAutoplay();
+  });
+}, { threshold: 0.05 });
+carouselVisibilityObserver.observe(stage);
+
 startAutoplay();
+
+/* Parallax sutil del fondo dentro de la sección del carrusel */
+const parallaxSky = document.getElementById('parallax-sky');
+window.addEventListener('scroll', () => {
+  if (parallaxSky) parallaxSky.style.transform = `translateY(${window.scrollY * 0.06}px)`;
+}, { passive: true });
 </script>
 
 </body>
