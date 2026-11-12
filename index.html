@@ -617,11 +617,11 @@
     <path d="M0,50 Q300,10 600,50 T1200,50" stroke="#E5D9C5" stroke-dasharray="6 6" stroke-width="1.5"></path>
   </svg>
 
-  <!-- ===== PORTAFOLIO: cada tarjeta es un <figure> con un <img> estándar. Para cambiar una imagen, reemplaza el archivo en images/ (o edita el src). Opcional: data-extra="images/proyecto-01-detalle.jpg" añade una 2.ª imagen al modal. Proporción recomendada: 1000 × 1420 px (aprox. 5:7). ===== -->
+  <!-- ===== PORTAFOLIO: cada tarjeta es un <figure> con un <img> estándar. Para cambiar una imagen, reemplaza el archivo en images/ (o edita el src). Cada proyecto muestra EXACTAMENTE 3 fotos en el modal: la portada (src del <img>) + data-img-2 + data-img-3. Si un archivo falta, se muestra un placeholder a color automáticamente. Proporción recomendada: 1000 × 1420 px (aprox. 5:7). ===== -->
   <div class="carousel-3d-stage" id="carousel-stage">
-    <figure class="carousel-3d-card active-card" data-desc="Rediseño completo de la marca Arka Studio, con enfoque minimalista y arquitectura de marca modular.">
+    <figure class="carousel-3d-card active-card" data-img-2="assets/images/proyecto-01-2.jpg" data-img-3="assets/images/proyecto-01-3.jpg" data-desc="Rediseño completo de la marca Arka Studio, con enfoque minimalista y arquitectura de marca modular.">
       <div class="carousel-card-inner">
-        <img src="assets/images/proyecto-01 - 2.jpg" alt="Arka Studio Identity">
+        <img onerror="imgFallback(this)" src="assets/images/proyecto-01 - 2.jpg" alt="Arka Studio Identity">
         <div class="card-info-overlay">
           <span class="category-badge">Branding</span>
           <h3 class="font-serif-display text-xl sm:text-2xl text-white">Arka Studio Identity</h3>
@@ -629,9 +629,9 @@
       </div>
     </figure>
 
-    <figure class="carousel-3d-card" data-desc="Animación tipográfica 3D y secuencias comerciales para el lanzamiento institucional de Norden &amp; Co.">
+    <figure class="carousel-3d-card" data-img-2="assets/images/proyecto-02-2.jpg" data-img-3="assets/images/proyecto-02-3.jpg" data-desc="Animación tipográfica 3D y secuencias comerciales para el lanzamiento institucional de Norden &amp; Co.">
       <div class="carousel-card-inner">
-        <img src="assets/images/proyecto-02.jpg" alt="Norden &amp; Co Motion">
+        <img onerror="imgFallback(this)" src="assets/images/proyecto-02.jpg" alt="Norden &amp; Co Motion">
         <div class="card-info-overlay">
           <span class="category-badge">Motion Graphics</span>
           <h3 class="font-serif-display text-xl sm:text-2xl text-white">Norden &amp; Co Motion</h3>
@@ -639,9 +639,9 @@
       </div>
     </figure>
 
-    <figure class="carousel-3d-card" data-desc="Diseño de empaque premium con terminados mate y barniz UV sectorizado para la línea cosmética Velar.">
+    <figure class="carousel-3d-card" data-img-2="assets/images/proyecto-03-2.jpg" data-img-3="assets/images/proyecto-03-3.jpg" data-desc="Diseño de empaque premium con terminados mate y barniz UV sectorizado para la línea cosmética Velar.">
       <div class="carousel-card-inner">
-        <img src="assets/images/proyecto-03.jpg" alt="Velar Packaging">
+        <img onerror="imgFallback(this)" src="assets/images/proyecto-03.jpg" alt="Velar Packaging">
         <div class="card-info-overlay">
           <span class="category-badge">Packaging</span>
           <h3 class="font-serif-display text-xl sm:text-2xl text-white">Velar Packaging</h3>
@@ -649,9 +649,9 @@
       </div>
     </figure>
 
-    <figure class="carousel-3d-card" data-desc="Campaña publicitaria estacional multiplataforma para el complejo gastronómico Muelle 9.">
+    <figure class="carousel-3d-card" data-img-2="assets/images/proyecto-04-2.jpg" data-img-3="assets/images/proyecto-04-3.jpg" data-desc="Campaña publicitaria estacional multiplataforma para el complejo gastronómico Muelle 9.">
       <div class="carousel-card-inner">
-        <img src="assets/images/proyecto-04.jpg" alt="Muelle 9 Campaign">
+        <img onerror="imgFallback(this)" src="assets/images/proyecto-04.jpg" alt="Muelle 9 Campaign">
         <div class="card-info-overlay">
           <span class="category-badge">Campaigns</span>
           <h3 class="font-serif-display text-xl sm:text-2xl text-white">Muelle 9 Campaign</h3>
@@ -659,9 +659,9 @@
       </div>
     </figure>
 
-    <figure class="carousel-3d-card" data-desc="Ecosistema gráfico y directrices de UI/UX para la plataforma financiera Halcón Capital.">
+    <figure class="carousel-3d-card" data-img-2="assets/images/proyecto-05-2.jpg" data-img-3="assets/images/proyecto-05-3.jpg" data-desc="Ecosistema gráfico y directrices de UI/UX para la plataforma financiera Halcón Capital.">
       <div class="carousel-card-inner">
-        <img src="assets/images/proyecto-05.jpg" alt="Halcón Capital UI">
+        <img onerror="imgFallback(this)" src="assets/images/proyecto-05.jpg" alt="Halcón Capital UI">
         <div class="card-info-overlay">
           <span class="category-badge">Digital &amp; Identity</span>
           <h3 class="font-serif-display text-xl sm:text-2xl text-white">Halcón Capital UI</h3>
@@ -669,9 +669,9 @@
       </div>
     </figure>
 
-    <figure class="carousel-3d-card" data-desc="Identidad visual basada en tonos orgánicos y fotografía conceptual para marca inmobiliaria.">
+    <figure class="carousel-3d-card" data-img-2="assets/images/proyecto-06-2.jpg" data-img-3="assets/images/proyecto-06-3.jpg" data-desc="Identidad visual basada en tonos orgánicos y fotografía conceptual para marca inmobiliaria.">
       <div class="carousel-card-inner">
-        <img src="assets/images/proyecto-06.jpg" alt="Tierra Firme Brand">
+        <img onerror="imgFallback(this)" src="assets/images/proyecto-06.jpg" alt="Tierra Firme Brand">
         <div class="card-info-overlay">
           <span class="category-badge">Branding</span>
           <h3 class="font-serif-display text-xl sm:text-2xl text-white">Tierra Firme Brand</h3>
@@ -679,9 +679,9 @@
       </div>
     </figure>
 
-    <figure class="carousel-3d-card" data-desc="Maquetación y libro de arte corporativo con acabado tipográfico en relieve para Aura.">
+    <figure class="carousel-3d-card" data-img-2="assets/images/proyecto-07-2.jpg" data-img-3="assets/images/proyecto-07-3.jpg" data-desc="Maquetación y libro de arte corporativo con acabado tipográfico en relieve para Aura.">
       <div class="carousel-card-inner">
-        <img src="assets/images/proyecto-07.jpg" alt="Aura Editorial">
+        <img onerror="imgFallback(this)" src="assets/images/proyecto-07.jpg" alt="Aura Editorial">
         <div class="card-info-overlay">
           <span class="category-badge">Visual Communication</span>
           <h3 class="font-serif-display text-xl sm:text-2xl text-white">Aura Editorial</h3>
@@ -689,9 +689,9 @@
       </div>
     </figure>
 
-    <figure class="carousel-3d-card" data-desc="Sistema cromático interactivo y dirección de arte conceptual para estudios Kroma.">
+    <figure class="carousel-3d-card" data-img-2="assets/images/proyecto-08-2.jpg" data-img-3="assets/images/proyecto-08-3.jpg" data-desc="Sistema cromático interactivo y dirección de arte conceptual para estudios Kroma.">
       <div class="carousel-card-inner">
-        <img src="assets/images/proyecto-08.jpg" alt="Kroma Color System">
+        <img onerror="imgFallback(this)" src="assets/images/proyecto-08.jpg" alt="Kroma Color System">
         <div class="card-info-overlay">
           <span class="category-badge">Art Direction</span>
           <h3 class="font-serif-display text-xl sm:text-2xl text-white">Kroma Color System</h3>
@@ -699,9 +699,9 @@
       </div>
     </figure>
 
-    <figure class="carousel-3d-card" data-desc="Material impreso de gran formato y branding ambiental para feria tecnológica Nexus.">
+    <figure class="carousel-3d-card" data-img-2="assets/images/proyecto-09-2.jpg" data-img-3="assets/images/proyecto-09-3.jpg" data-desc="Material impreso de gran formato y branding ambiental para feria tecnológica Nexus.">
       <div class="carousel-card-inner">
-        <img src="assets/images/proyecto-09.jpg" alt="Nexus Tech Expo">
+        <img onerror="imgFallback(this)" src="assets/images/proyecto-09.jpg" alt="Nexus Tech Expo">
         <div class="card-info-overlay">
           <span class="category-badge">Campaigns</span>
           <h3 class="font-serif-display text-xl sm:text-2xl text-white">Nexus Tech Expo</h3>
@@ -709,9 +709,9 @@
       </div>
     </figure>
 
-    <figure class="carousel-3d-card" data-desc="Bucle dinámico en 3D para instalaciones de pantallas LED gigantes en espacios públicos.">
+    <figure class="carousel-3d-card" data-img-2="assets/images/proyecto-10-2.jpg" data-img-3="assets/images/proyecto-10-3.jpg" data-desc="Bucle dinámico en 3D para instalaciones de pantallas LED gigantes en espacios públicos.">
       <div class="carousel-card-inner">
-        <img src="assets/images/proyecto-10.jpg" alt="Vortex Motion Loop">
+        <img onerror="imgFallback(this)" src="assets/images/proyecto-10.jpg" alt="Vortex Motion Loop">
         <div class="card-info-overlay">
           <span class="category-badge">Motion Graphics</span>
           <h3 class="font-serif-display text-xl sm:text-2xl text-white">Vortex Motion Loop</h3>
@@ -833,6 +833,14 @@
 
 <!-- ============ JAVASCRIPT ============ -->
 <script>
+  // Placeholder a color si una imagen local aún no existe (Plug & Play)
+  function imgFallback(img){
+    img.onerror = null;
+    const label = (img.alt || 'Proyecto').replace(/[<>&"]/g,'');
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1420"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C1652E"/><stop offset="1" stop-color="#E5D9C5"/></linearGradient></defs><rect width="1000" height="1420" fill="url(#g)"/><text x="500" y="710" font-family="Georgia,serif" font-size="56" fill="#111111" text-anchor="middle">${label}</text></svg>`;
+    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+
   // DOM Loaded Initiators
   document.addEventListener("DOMContentLoaded", () => {
     // 1. Mobile Menu Toggle
@@ -943,15 +951,23 @@
       if (!modal) return;
       const title = card.querySelector('h3').textContent;
       const cover = card.querySelector('img').getAttribute('src');
-      const extra = card.dataset.extra;
+      const img2 = card.getAttribute('data-img-2');
+      const img3 = card.getAttribute('data-img-3');
       document.getElementById('modal-title').textContent = title;
       document.getElementById('modal-category').textContent = card.querySelector('.category-badge').textContent;
       document.getElementById('modal-description').textContent = card.dataset.desc || '';
       modalGallery.innerHTML = '';
-      [[cover, ''], [extra || cover, extra ? '' : ' grayscale']].forEach(([src, extraCls]) => {
+      // Exactamente 3 fotos distintas, todas a color: 1 panorámica + 2 en fila
+      [
+        [cover, 'md:col-span-2 md:h-96'],
+        [img2 || cover, ''],
+        [img3 || cover, '']
+      ].forEach(([src, extraCls], i) => {
         const img = document.createElement('img');
-        img.src = src; img.alt = title;
-        img.className = 'rounded-xl w-full h-64 object-cover' + extraCls;
+        img.src = src; img.alt = title + ' – foto ' + (i + 1);
+        img.loading = 'lazy';
+        img.onerror = () => imgFallback(img);
+        img.className = ('rounded-xl w-full h-64 object-cover ' + extraCls).trim();
         modalGallery.appendChild(img);
       });
       modal.classList.add('active');
